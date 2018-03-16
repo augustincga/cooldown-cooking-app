@@ -2,13 +2,13 @@ var foodProductController = require('../controllers/food-product.controller.js')
 
 module.exports = function(app) {
     // Create a single Food Product
-    app.post('/single-food-product', foodProductController.createSingleFoodProduct);
+    app.post('/api/single-food-product', foodProductController.createSingleFoodProduct);
 
     // Create multiple Food Products at once
     // app.post('/multiple-food-products', foodProductController.createMultipleFoodProducts);
 
     // Retrieve all Food Products
-    app.get('/food-product', foodProductController.findAllFoodProducts);
+    app.get('/api/food-product', foodProductController.findAllFoodProducts);
 
     // Retrieve a single Food Product by id
     // app.get('/food-product/:foodProductId', test.findOneFoodProductById);

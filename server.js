@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var dbConfig = require('./config/database.config.js');
+var cors = require('cors');
 
 const app = express();
 
@@ -9,7 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-//Import all routes
+app.use(cors());
+
+//Attach Routes
+require('./server/routes/util.routes')(app);
 require('./server/routes/food-product.routes')(app);
 
 mongoose.Promise = global.Promise;
