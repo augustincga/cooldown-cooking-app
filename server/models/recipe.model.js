@@ -5,39 +5,42 @@ let RecipeSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    cookingSteps: {
-        type: String,
-        required: true
+    cookingSteps: [String],
+    preparationTime: {
+        type: String
     },
     cookingTime: {
-        type: Number,
+        type: String,
     },
-    servings: {
-        type: Number,
-    },
+    servings: String,
     createdDate: {
         type: Date,
         default: Date.now
+    },
+    nutrients: {
+        calories: Number,
+        carbohydrates: String,
+        protein: String,
+        fat: String
     },
     author: {
         type: String,
         required: true
     },
-    images: [{
-        type: String
-    }],
+    smallImage: String,
+    largeImage: String,
     ingredients: [{
         name: {type: String, required: true},
-        amount: {type: Number, required: true},
+        amount: {type: String, required: true},
         unit: {type: String, required: true},
     }],
     categories: [String],
     receivedReviews: [{
-        userId: {type: mongoose.Schema.Types.Object, ref: 'User'},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         reviewId: {type: mongoose.Schema.Types.ObjectId, ref: 'Review'}
     }],
     receivedRatings: [{
-        userId: {type: mongoose.Schema.Types.Object, ref: 'User'},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         ratingId: {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'}
     }],
 });

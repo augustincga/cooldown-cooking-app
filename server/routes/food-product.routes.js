@@ -6,9 +6,9 @@ module.exports = function(app) {
 
     // Create multiple Food Products at once
     // app.post('/multiple-food-products', foodProductController.createMultipleFoodProducts);
-
+    
     // Retrieve all Food Products
-    app.get('/api/food-product', foodProductController.findAllFoodProducts);
+    app.get('/api/food-products', foodProductController.findAllFoodProducts);
 
     // Retrieve a single Food Product by id
     // app.get('/food-product/:foodProductId', test.findOneFoodProductById);

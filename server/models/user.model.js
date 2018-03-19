@@ -38,34 +38,34 @@ let UserSchema = mongoose.Schema({
         id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     }],
     addedRecipeReviews: [{
-        recipeId: {type: mongoose.Schema.Types.Object, ref: 'Recipe'},
+        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
         reviewId: {type: mongoose.Schema.Types.ObjectId, ref: 'Review'}
     }],
     addedUserReviews: [{
-        userId: {type: mongoose.Schema.Types.Object, ref: 'User'},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         reviewId: {type: mongoose.Schema.Types.ObjectId, ref: 'Review'}
     }],
     receivedReviews: [{
-        userId: {type: mongoose.Schema.Types.Object, ref: 'User'},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         reviewId: {type: mongoose.Schema.Types.ObjectId, ref: 'Review'}
     }],
     addedRecipeRatings: [{
-        recipeId: {type: mongoose.Schema.Types.Object, ref: 'Recipe'},
+        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
         ratingId: {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'}
     }],
     addedUserRatings: [{
-        userId: {type: mongoose.Schema.Types.Object, ref: 'User'},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         ratingId: {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'}
     }],
     receivedRatings: [{
-        userId: {type: mongoose.Schema.Types.Object, ref: 'User'},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         ratingId: {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'}
     }],
     ownRecipes: [{
-        recipeId: {type: mongoose.Schema.Types.Object, ref: 'Recipe'}
+        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'}
     }],
     recipesFollowing: [{
-        recipeId: {type: mongoose.Schema.Types.Object, ref: 'Recipe'}
+        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'}
     }]
 });
 

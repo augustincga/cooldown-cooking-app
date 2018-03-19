@@ -23,7 +23,7 @@ exports.findAllFoodProducts = function(req, res) {
     FoodProduct.find(function(err, foodProducts){
         if(err) {
             console.log(err);
-            res.status(500).send({message: "Some error occurred while retrieving notes."});
+            res.status(500).send({message: "Some error occurred while retrieving food products."});
         } else {
             res.send(foodProducts);
         }
