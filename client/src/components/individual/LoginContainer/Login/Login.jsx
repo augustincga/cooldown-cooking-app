@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { FormControl, Button } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
-const FormGroup = require ('react-bootstrap').FormGroup;
-const FieldGroup = require('react-bootstrap').FieldGroup;
-// const FormControl = require('react-bootstrap').FormControl;
-
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 import('./Login.css');
-const loginBackground = require('../../../../assets/imgs/login_background.jpg')
 
 class Login extends Component {
   constructor(props) {
@@ -21,33 +16,24 @@ class Login extends Component {
   }
   render() {
     return (
-        <div className='login'>
-            <section className='login__left'>
-                    <div className='background-left'>
-                        <p className='register-text'>Don`t have an account? Register Now!</p>
+        <div className='login-wrapper'>
+            <section className='login-wrapper__left-side'>
+                    <div className='left-side-wrapper'>
+                        <p className='left-side-register'>Don`t have an account? Register Now!</p>
                     </div>
             </section>
-            <section className='login__form'>
-                <div className='form-title'>
-                    <h1>Sign In</h1>
-                </div>
+            <section className='login-wrapper__form'>
                 <form>
                     <fieldset className='form-fieldset'>
-                        <Col lg={10}>
-                            <label>Email: </label>
-                            <FormControl/>
-                        </Col>
+                        <TextField hintText='E-mail'/>
                     </fieldset>
                     <fieldset className='form-fieldset'>
-                        <Col lg={10}>
-                            <label>Password: </label>
-                            <FormControl type='Password'/>
-                        </Col>
+                        <TextField hintText='Password' type="password"/>
                     </fieldset>
-                    <div className="form-button" >
-                        <Button bsStyle="primary" bsSize="sm" block>Sign In</Button>
+                    <div className="form-login-btn" >
+                        <RaisedButton label="Sign In" primary={true}/>
                     </div>
-                    <div className="form-forgot-password-link" >
+                    <div className="form-forgot-password" >
                         <a href="#">Forgot your password?</a>
                     </div>
                 </form>

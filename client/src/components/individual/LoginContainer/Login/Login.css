@@ -1,52 +1,51 @@
-.login {
+.login-wrapper {
     display: flex;
     flex-direction: row;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-.login .login__left, .login__form {
+.login-wrapper .login-wrapper__left-side, .login-wrapper__form {
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
     flex: 1 1;
     font-size: 18px;
 }
 
-.login .login__left {
+.login-wrapper__left-side {
+    flex-basis: 50% !important;
     background: url('../../../../assets/imgs/login_background.jpg');
     background-size: cover;
-    flex-basis: 50%;
+    opacity: 0.7;
 }
 
-.login__left .register-text {
+.login-wrapper__left-side .left-side-register {
     position: absolute;
-    font-size: 24px;
+    bottom: 0;
+    color: #FCF3CF;
+    font-size: 20px;
+    transform: translate(-50%, -50%);
     cursor: pointer;
-    color: #7FB3D5;
-    width: 70%;
-    bottom:0;
-    text-align:center;
+    opacity: 1;
 }
 
-.login .login__form {
+.login-wrapper__form {
     height: 100vh;
+    background-color: #FCF3CF;
 }
 
-.login__form .form-title {
-    text-align: center;
+.login-wrapper__form .form-fieldset {
+    margin-top: 20px;
 }
 
-.login__form .form-fieldset {
-    margin-left: 30px;
-    margin-top: 15px;
+.login-wrapper__form .form-login-btn {
+    display: flex;
+    justify-content: center; /* For horizontal alignment */
+    align-items: center; /* For vertical alignment */
+    margin-top: 30px;
 }
 
-.login__form .form-button {
-    margin: 0 auto;
-    margin-top: 30px;    
-    width: 50%;
-}
-
-.login__form .form-forgot-password-link {
+.login-wrapper__form .form-forgot-password {
     text-align: center;
     margin-top: 10px;
     font-size: 14px;    
