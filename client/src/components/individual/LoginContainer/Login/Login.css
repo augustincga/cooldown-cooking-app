@@ -1,0 +1,53 @@
+.login {
+    display: flex;
+    flex-direction: row;
+}
+
+.login .login__left, .login__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1;
+    font-size: 18px;
+}
+
+.login .login__left {
+    background: url('../../../../assets/imgs/login_background.jpg');
+    background-size: cover;
+    flex-basis: 50%;
+}
+
+.login__left .register-text {
+    position: absolute;
+    font-size: 24px;
+    cursor: pointer;
+    color: #7FB3D5;
+    width: 70%;
+    bottom:0;
+    text-align:center;
+}
+
+.login .login__form {
+    height: 100vh;
+}
+
+.login__form .form-title {
+    text-align: center;
+}
+
+.login__form .form-fieldset {
+    margin-left: 30px;
+    margin-top: 15px;
+}
+
+.login__form .form-button {
+    margin: 0 auto;
+    margin-top: 30px;    
+    width: 50%;
+}
+
+.login__form .form-forgot-password-link {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;    
+}

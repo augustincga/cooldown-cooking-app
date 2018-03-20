@@ -9,6 +9,10 @@ let UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        required: true
+    },
     firstName: {
         type: String,
         required: true
@@ -66,7 +70,24 @@ let UserSchema = mongoose.Schema({
     }],
     recipesFollowing: [{
         recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'}
-    }]
+    }],
+    alreadyCookedRecipes: [{
+        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
+        personalSpecifications: {
+            ocasion: String,
+            date: Date,
+            additionalNotes: [String],
+            recipeChangesNotes: [String]
+        } 
+    }],
+    googleSearchedRecipes: [{
+        date: Date,
+        uploadedImg: String,
+        urlResult: String,
+    }],
+    // dashboard: [{
+
+    // }]
 });
 
 module.exports = mongoose.model('User', UserSchema);
