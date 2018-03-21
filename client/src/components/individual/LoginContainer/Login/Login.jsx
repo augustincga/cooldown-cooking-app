@@ -19,7 +19,7 @@ class Login extends Component {
         <div className='login-wrapper'>
             <section className='login-wrapper__left-side'>
                     <div className='left-side-wrapper'>
-                        <p className='left-side-register'>Don`t have an account? Register Now!</p>
+                        <p className='left-side-register' onClick={this.props.onRegisterClick}>Don`t have an account? Register Now!</p>
                     </div>
             </section>
             <section className='login-wrapper__form'>
