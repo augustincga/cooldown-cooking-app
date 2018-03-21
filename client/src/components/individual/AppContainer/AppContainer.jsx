@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 
-import Login from './Login/Login'
+import App from './App/App'
 
-class LoginContainer extends Component {
+class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
 
     }
   }
-  componentWillMount() {
 
-  }
   render() {
     return (
-        <Login/>
+        <App/>
     );
   }
 }
 
-export default LoginContainer;
+export default AppContainer;
