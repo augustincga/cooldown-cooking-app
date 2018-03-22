@@ -25,13 +25,20 @@ class Login extends Component {
             <section className='login-wrapper__form'>
                 <form>
                     <fieldset className='form-fieldset'>
-                        <TextField hintText='E-mail'/>
+                        <TextField
+                            hintText='E-mail'
+                            ref={(email) => { this.email = email }}
+                        />
                     </fieldset>
                     <fieldset className='form-fieldset'>
-                        <TextField hintText='Password' type="password"/>
+                        <TextField
+                            hintText='Password'
+                            type="password"
+                            ref={(password) => { this.password = password }}
+                        />
                     </fieldset>
                     <div className="form-login-btn" >
-                        <RaisedButton label="Sign In" primary={true}/>
+                        <RaisedButton label="Sign In" primary={true} onClick={this.props.onLoginClick}/>
                     </div>
                     <div className="form-forgot-password" >
                         <a href="#">Forgot your password?</a>

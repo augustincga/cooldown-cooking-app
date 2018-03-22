@@ -15,6 +15,7 @@ app.use(cors());
 //Attach Routes
 require('./server/routes/util.routes')(app);
 require('./server/routes/food-product.routes')(app);
+require('./server/routes/user.routes')(app);
 
 mongoose.Promise = global.Promise;
 
