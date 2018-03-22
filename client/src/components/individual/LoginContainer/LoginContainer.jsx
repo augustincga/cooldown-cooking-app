@@ -22,7 +22,11 @@ class LoginContainer extends Component {
           />
           <Login onRegisterClick = {this._onRegisterClick}/>
         </div>
-    );
+    );  
+  }
+
+  componentDidMount() {
+    console.log(this);
   }
 
   _onRegisterClick () {
@@ -33,7 +37,7 @@ class LoginContainer extends Component {
   _onRegisterModalClose = () => {
     this.setState({ isRegisterModalOpen: false });
     console.log('Closed');
-};
+  };
 }
 
 export default LoginContainer;

@@ -1,0 +1,28 @@
+.register-wrapper__modal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-wrapper__modal-body {
+    width: 100%;
+}
+
+.register-wrapper__modal-content {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.register-wrapper__modal-title {
+    text-align: center;
+}
+
+.modal-text-field {
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.modal-date-picker-field {
+    display: flex;
+    justify-content: center;
+}

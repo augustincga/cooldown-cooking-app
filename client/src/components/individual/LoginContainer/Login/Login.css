@@ -22,8 +22,8 @@
 .login-wrapper__left-side .left-side-register {
     position: absolute;
     bottom: 0;
-    color: #FCF3CF;
     font-size: 20px;
+    color: white;
     transform: translate(-50%, -50%);
     cursor: pointer;
     opacity: 1;
@@ -31,7 +31,6 @@
 
 .login-wrapper__form {
     height: 100vh;
-    background-color: #FCF3CF;
 }
 
 .login-wrapper__form .form-fieldset {
