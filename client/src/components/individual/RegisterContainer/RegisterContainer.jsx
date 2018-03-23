@@ -59,11 +59,11 @@ class RegisterContainer extends Component {
             method: 'post',
             body: JSON.stringify(data)
         }).then(function (response) {
-            return response.json()
-            console.log(response)
-        }).then(function (body) {
-            console.log(body);
-        });
+            if(response.status === 200) {
+				this.props.onRegisterModalClose();
+				this.props.onRegisterSuccessfully();
+			}
+        }.bind(this))
     }
 }
 

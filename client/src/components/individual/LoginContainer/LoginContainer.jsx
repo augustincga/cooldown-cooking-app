@@ -21,7 +21,8 @@ class LoginContainer extends Component {
             <div>
                 <RegisterContainer
                     isRegisterModalOpen={this.state.isRegisterModalOpen}
-                    onRegisterModalClose={this._onRegisterModalClose}
+					onRegisterModalClose={this._onRegisterModalClose}
+					onRegisterSuccessfully={this._redirectToHomePage}
                 />
                 <Login
                     onRegisterClick={this._onRegisterClick}
@@ -30,10 +31,6 @@ class LoginContainer extends Component {
                 />
             </div>
         );
-    }
-
-    componentDidMount() {
-        console.log(this);
     }
 
     _onLoginClick() {
@@ -60,15 +57,14 @@ class LoginContainer extends Component {
 
     _onRegisterClick() {
         this.setState({isRegisterModalOpen: true});
-        console.log('asd');
     };
 
     _onRegisterModalClose = () => {
         this.setState({isRegisterModalOpen: false});
-        console.log('Closed');
     };
 
     _redirectToHomePage() {
+		this.props.changeAuthState();
         this.props.history.push("/");
     }
 }
