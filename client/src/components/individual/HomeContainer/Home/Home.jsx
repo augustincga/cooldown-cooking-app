@@ -12,7 +12,7 @@ class Home extends Component {
   render() {
     return (
 		<div>
-			<p>Welcome</p>
+			<p>Welcome, {this.props.userData.fullName}</p>
 		</div>
     );
   }

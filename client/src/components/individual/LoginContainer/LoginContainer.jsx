@@ -48,8 +48,10 @@ class LoginContainer extends Component {
             body: JSON.stringify(userCredentials)
         }).then(function (response) {
             if(response.status === 200) {
-                this._redirectToHomePage();
-            } else {
+				response.json().then((data) => {
+					this._redirectToHomePage(data);
+				})
+			} else {
                 //notification here that user couldn`t login using these credentials
             }
         }.bind(this));
@@ -63,9 +65,9 @@ class LoginContainer extends Component {
         this.setState({isRegisterModalOpen: false});
     };
 
-    _redirectToHomePage() {
-		this.props.changeAuthState();
-        this.props.history.push("/");
+    _redirectToHomePage(userData) {
+		this.props.onUserLogin(userData);
+		this.props.history.push("/");
     }
 }
 

@@ -12,12 +12,12 @@ exports.registerUser = function(req, res) {
 
     let user = new User(processedUser);
 
-    user.save(function(err, data) {
+    user.save(function(err, user) {
         if(err) {
             console.log(err);
             res.status(500).send({message: "Some error occurred while trying to register."});
         } else {
-            res.status(200).send(data);
+            res.status(200).send(user);
         }
     });
 };

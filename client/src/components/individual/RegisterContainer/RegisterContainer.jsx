@@ -60,8 +60,10 @@ class RegisterContainer extends Component {
             body: JSON.stringify(data)
         }).then(function (response) {
             if(response.status === 200) {
-				this.props.onRegisterModalClose();
-				this.props.onRegisterSuccessfully();
+				response.json().then((data) => {
+					this.props.onRegisterModalClose();
+					this.props.onRegisterSuccessfully(data);
+				})
 			}
         }.bind(this))
     }
