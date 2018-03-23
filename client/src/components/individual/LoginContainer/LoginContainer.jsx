@@ -9,6 +9,8 @@ class LoginContainer extends Component {
         this.state = {
             isRegisterModalOpen: false
         };
+
+        this._redirectToHomePage = this._redirectToHomePage.bind(this);
         this._onRegisterClick = this._onRegisterClick.bind(this);
         this._onRegisterModalClose = this._onRegisterModalClose.bind(this);
         this._onLoginClick = this._onLoginClick.bind(this);
@@ -48,11 +50,12 @@ class LoginContainer extends Component {
             method: 'post',
             body: JSON.stringify(userCredentials)
         }).then(function (response) {
-            return response.json();
-            console.log(response)
-        }).then(function (body) {
-            console.log(body);
-        });
+            if(response.status === 200) {
+                this._redirectToHomePage();
+            } else {
+                //notification here that user couldn`t login using these credentials
+            }
+        }.bind(this));
     };
 
     _onRegisterClick() {
@@ -64,6 +67,10 @@ class LoginContainer extends Component {
         this.setState({isRegisterModalOpen: false});
         console.log('Closed');
     };
+
+    _redirectToHomePage() {
+        this.props.history.push("/");
+    }
 }
 
 export default LoginContainer;

@@ -17,7 +17,7 @@ exports.registerUser = function(req, res) {
             console.log(err);
             res.status(500).send({message: "Some error occurred while trying to register."});
         } else {
-            res.send(data);
+            res.status(200).send(data);
         }
     });
 };
@@ -32,9 +32,9 @@ exports.loginUser = function(req, res) {
             console.log(err);
             res.status(500).send({message: "There was an error trying to login."});
         } else if(user !== null && passwordHash.verify(req.body.password, user.password)){
-            res.send(user);
+            res.status(200).send(user);
         } else {
-            res.status(200).send({message: "Credentials do not match."});
+            res.status(403).send({message: "Credentials do not match."});
         }
     });
 };
