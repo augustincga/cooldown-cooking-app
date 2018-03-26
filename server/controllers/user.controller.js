@@ -12,14 +12,17 @@ exports.registerUser = function(req, res) {
 
     let user = new User(processedUser);
 
-    user.save(function(err, user) {
-        if(err) {
-            console.log(err);
-            res.status(500).send({message: "Some error occurred while trying to register."});
-        } else {
-            res.status(200).send(user);
-        }
-    });
+	User.findOne({email: req.body.email}, function(err, data){
+		if(err) {
+			console.log(err);
+			res.status(500).send({message: "Some error occurred while trying to register."});
+		} else if(data === null) {
+			user.save();
+			res.status(200).send(user);
+		} else {
+			res.status(422).send({message: "E-mail address already exists. Please choose another one."})
+		}
+	});
 };
 
 exports.loginUser = function(req, res) {
