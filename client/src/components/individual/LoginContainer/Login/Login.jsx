@@ -41,7 +41,7 @@ class Login extends Component {
                         <RaisedButton label="Sign In" primary={true} onClick={this.props.onLoginClick}/>
                     </div>
                     <div className="form-forgot-password" >
-                        <a href="#">Forgot your password?</a>
+                        <a>Forgot your password?</a>
                     </div>
                 </form>
             </section>

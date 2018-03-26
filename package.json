@@ -9,6 +9,7 @@
     "express": "^4.16.2",
     "mongoose": "^4.13.6",
     "password-hash": "^1.2.2",
+    "react-s-alert": "^1.4.1",
     "universal-cookie": "^2.1.2"
   },
   "scripts": {

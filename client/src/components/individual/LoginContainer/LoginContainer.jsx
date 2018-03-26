@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import Login from './Login/Login'
 import RegisterContainer from '../RegisterContainer/RegisterContainer';
+import {errorNotification} from '../../shared/constants'
 
 class LoginContainer extends Component {
     constructor(props) {
@@ -52,7 +53,9 @@ class LoginContainer extends Component {
 					this._redirectToHomePage(data);
 				})
 			} else {
-                //notification here that user couldn`t login using these credentials
+				response.json().then((data) => {
+					errorNotification(data.message);
+				});
             }
         }.bind(this));
     };

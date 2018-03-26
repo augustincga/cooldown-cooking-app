@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 
 import Register from './Register/Register'
+import {errorNotification} from '../../shared/constants'
 
 class RegisterContainer extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class RegisterContainer extends Component {
     
     _validateRegisterForm () { 
         if(this.child.formPassword.getValue() !== this.child.formRepeatPassword.getValue()) {
-            console.log('Passwords doesn`t match.')
+            errorNotification('Passwords does not match.')
             return false;
         }
         return true;
@@ -45,8 +46,6 @@ class RegisterContainer extends Component {
                 fullName: `${this.child.formFirstName.getValue()} ${this.child.formLastName.getValue()}`
             };
             this._sendUserInformationToServer(userInformation);
-        } else {
-            this._validateRegisterForm();
         }
     }
 
@@ -64,6 +63,10 @@ class RegisterContainer extends Component {
 					this.props.onRegisterModalClose();
 					this.props.onRegisterSuccessfully(data);
 				})
+			} else {
+				response.json().then((data) => {
+					errorNotification(data.message);
+				});
 			}
         }.bind(this))
     }

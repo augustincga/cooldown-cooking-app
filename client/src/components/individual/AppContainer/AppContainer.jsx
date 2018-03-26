@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {
 	BrowserRouter as Router,
 	Route,
-	Link,
-	Switch,
-	IndexRedirect
+	Switch
 } from 'react-router-dom';
 
-import App from './App/App'
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/flip.css';
+
 import HomeContainer from '../HomeContainer/HomeContainer'
 import LoginContainer from '../LoginContainer/LoginContainer'
 import NotFoundRoute from '../../shared/NotFoundRoute/NotFoundRoute'
@@ -27,13 +28,16 @@ class AppContainer extends Component {
 
 	render() {
 		return (
-			<Router>
-				<Switch>
-					<Route exact path='/login' render={(params) => <LoginContainer onUserLogin={this._onUserLogin} history={params.history} />} />
-					<PrivateRoute exact path='/' component={HomeContainer} authed={this.state.authed} />
-					<Route component={NotFoundRoute} />
-				</Switch>
-			</Router>
+			<div>
+				<Router>
+					<Switch>
+						<Route exact path='/login' render={(params) => <LoginContainer onUserLogin={this._onUserLogin} history={params.history} />} />
+						<PrivateRoute exact path='/' component={HomeContainer} authed={this.state.authed} />
+						<Route component={NotFoundRoute} />
+					</Switch>
+				</Router>
+				<Alert stack={{limit: 3}} />
+			</div>
 		);
 	}
 
