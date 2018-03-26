@@ -19,7 +19,7 @@ class AppContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			authed: false
+			authed: cookies.get('user') ? true : false
 		}
 		this._changeAuthState = this._changeAuthState.bind(this)
 		this._createUserCookie = this._createUserCookie.bind(this)
