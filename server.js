@@ -16,6 +16,8 @@ app.use(cors());
 require('./server/routes/util.routes')(app);
 require('./server/routes/food-product.routes')(app);
 require('./server/routes/user.routes')(app);
+require('./server/routes/food-category.routes')(app);
+require('./server/routes/recipe.routes')(app);
 
 mongoose.Promise = global.Promise;
 
