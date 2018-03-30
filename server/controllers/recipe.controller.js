@@ -94,6 +94,9 @@ exports.getSimilarRecipes = function(req, res) {
 			$project: {
 				totalMatch: 0
 			}
+		},
+		{
+			$limit: 10
 		}
 	], function (err, recipes) {
 		if (err) {
@@ -195,3 +198,47 @@ exports.getRecipesByFilters = function (req, res) {
 		});
 	}
 }
+
+exports.getRecipesByName = function(req, res) {
+	if (!req.body) {
+		res.status(500).send({ message: req.body });
+	};
+
+	let recipesName = req.body.recipesName;
+
+	let searchQuery = {
+		"title": { $regex: new RegExp(`.*${recipesName}.*`, 'i') }
+	};
+
+	Recipe.find(searchQuery, function(err, recipes){
+		if(err) {
+			res.status(500).send({message: "Some error occurred while searching for the Recipes."})
+		} else if(recipes && recipes.length > 0) {
+			res.status(200).send(recipes);
+		} else {
+			res.status(404).send({message: "Could not find recipes by required name."});
+		}
+	})
+};
+
+exports.getRecipesByAuthorId = function(req, res) {
+	if (!req.body) {
+		res.status(500).send({ message: req.body });
+	};
+
+	let authorId = req.body.authorId;
+
+	let searchQuery = {
+		"authorId" : authorId
+	};
+
+	Recipe.find(searchQuery, function(err, recipes){
+		if(err) {
+			res.status(500).send({message: "Some error occurred while searching for the Recipes."})
+		} else if(recipes && recipes.length > 0) {
+			res.status(200).send(recipes);
+		} else {
+			res.status(404).send({message: "Could not find recipes by required author."});
+		}
+	})
+};

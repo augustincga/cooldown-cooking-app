@@ -15,4 +15,11 @@ module.exports = function(app){
 	//params - filters [], ingredients []
 	//Find Recipes based on all requested filters and containing all or some of the requested ingredients
 	app.post('/api/recipe/getRecipesByFilters', recipeController.getRecipesByFilters)
+
+	//params - recipesName String
+	app.post('/api/recipe/getRecipesByName', recipeController.getRecipesByName)
+
+	//params - authorId String
+	app.post('/api/recipe/getRecipesByAuthor', recipeController.getRecipesByAuthorId)
+	
 }

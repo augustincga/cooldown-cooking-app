@@ -26,7 +26,10 @@ let RecipeSchema = mongoose.Schema({
     author: {
         type: String,
         required: true
-    },
+	},
+	authorId: {
+		type: String
+	},
     smallImage: String,
     largeImage: String,
     ingredients: [{
