@@ -1,6 +1,7 @@
 var passwordHash = require('password-hash');
 
 var User = require('../models/user.model.js');
+var Recipe = require('../models/recipe.model')
 
 exports.registerUser = function(req, res) {
     if(!req.body) {
@@ -40,4 +41,68 @@ exports.loginUser = function(req, res) {
             res.status(403).send({message: "Credentials do not match."});
         }
     });
+};
+
+exports.saveRecipeForLater = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let recipe = {recipeId: req.body.recipeId}
+	let userId = req.body.userId
+
+	User.update({ _id: userId }, { $push: { savedForLaterRecipes: recipe } }, function(err, recipe){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to add the recipe to saved for later list."});
+        } else {
+			res.status(200).send({message: "The recipe was added to saved for later list."})
+		}
+	});
+};
+
+exports.getSavedForLaterRecipes = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let userId = req.body.userId
+
+	User.find({ _id: userId }, 'savedForLaterRecipes', function(err, list){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to get the saved for later recipes list."});
+        } else {
+			let recipeIdsList = [];
+			list[0].savedForLaterRecipes.forEach(function(recipe){
+				recipeIdsList.push(recipe.recipeId);
+			})
+			Recipe.find({ _id: { $in: recipeIdsList } }, function (err, recipes) {
+				if(err) {
+					console.log(err);
+					res.status(500).send({message: "There was an error trying to get the saved for later recipes list."});
+				} else {
+					res.status(200).send(recipes);
+				}
+			});
+		}
+	});
+}
+
+exports.rateRecipe = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+	
+};
+
+exports.reviewRecipe = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let review = {
+
+	}
+	
 };

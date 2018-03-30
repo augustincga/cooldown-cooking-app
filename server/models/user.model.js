@@ -70,6 +70,9 @@ let UserSchema = mongoose.Schema({
     }],
     recipesFollowing: [{
         recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'}
+	}],
+	savedForLaterRecipes: [{
+        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'}
     }],
     alreadyCookedRecipes: [{
         recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
