@@ -21,5 +21,7 @@ module.exports = function(app){
 
 	//params - authorId String
 	app.post('/api/recipe/getRecipesByAuthor', recipeController.getRecipesByAuthorId)
-	
+
+	//params - authorId String
+	app.post('/api/recipe/addNewRecipe', recipeController.addNewRecipe)
 }

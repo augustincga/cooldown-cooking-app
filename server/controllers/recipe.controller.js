@@ -242,3 +242,39 @@ exports.getRecipesByAuthorId = function(req, res) {
 		}
 	})
 };
+
+exports.addNewRecipe = function(req, res) {
+	if (!req.body) {
+		res.status(500).send({ message: req.body });
+	};
+
+	let recipe = req.body.recipe;
+
+	let recipeDetails = {
+		title: recipe.title,
+		cookingSteps: recipe.cookingSteps.length > 0 ? recipe.cookingSteps : [],
+		prepartionTime: recipe.prepTime,
+		cookingTime: recipe.cookTime,
+		servings: recipe.servings,
+		nutrients: {
+			calories: recipe.calories,
+			carbohydrates: recipe.carbs,
+			protein: recipe.protein,
+			fat: recipe.fat
+		},
+		author: recipe.author,
+		authorId: recipe.authorId,
+		smallImage: recipe.smallImg,
+		largeImage: recipe.largeImg,
+		ingredients: recipe.ingredients.length > 0 ? recipe.ingredients : [],
+		categories: recipe.categories.length > 0 ? recipe.categories : []
+	};
+
+	new Recipe(recipeDetails).save(function(err, recipe){
+		if(err) {
+			res.status(500).send({message: `Could not add ${recipe.title}`});
+		} else {
+			res.status(200).send({message: `${recipe.title} has been added.`});
+		}
+	});
+};
