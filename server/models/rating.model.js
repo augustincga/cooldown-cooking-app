@@ -1,10 +1,6 @@
 let mongoose = require('mongoose');
 
 let RatingSchema = mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
     score: {
         type: Number,
         required: true

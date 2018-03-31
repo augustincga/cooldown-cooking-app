@@ -110,6 +110,8 @@ exports.getSimilarRecipes = function(req, res) {
 };
 
 
+
+//TODO - get recipes containing requested array + other ingredients
 exports.getRecipesByFilters = function (req, res) {
 	if (!req.body) {
 		res.status(500).send({ message: req.body });
@@ -275,6 +277,78 @@ exports.addNewRecipe = function(req, res) {
 			res.status(500).send({message: `Could not add ${recipe.title}`});
 		} else {
 			res.status(200).send({message: `${recipe.title} has been added.`});
+		}
+	});
+};
+
+exports.addRating = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let userId = req.body.userId;
+	let userName = req.body.userName;
+	let recipeId = req.body.recipeId;
+	let ratingScore = req.body.ratingScore;
+
+	let searchQuery = {
+		_id: recipeId
+	}
+
+	let rating = {
+		score: ratingScore,
+		userName: userName,
+		userId: userId
+	}
+
+	Recipe.find({_id: recipeId, "receivedRatings.userId": userId}, function(err, foundItem) {
+		if(err) {
+			res.status(500).send({message: "There was an error trying to rate this recipe."});
+		} else if(foundItem && foundItem.length === 0) {
+			Recipe.update(searchQuery, { $push: { receivedRatings: rating } }, function(err, recipe){
+				if(err) {
+					console.log(err);
+					res.status(500).send({message: "There was an error trying to rate this recipe."});
+				} else {
+					res.status(200).send({message: `The rating has been added.`})
+				}
+			});
+		} else {
+			res.status(500).send({message: "You have already rated this recipe."});
+		}
+	})
+};
+
+exports.addReview = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let userId = req.body.userId;
+	let userName = req.body.userName;
+	let recipeId = req.body.recipeId;
+	let reviewItem = {
+		title: req.body.review.title,
+		content: req.body.review.content
+	};
+
+	let searchQuery = {
+		_id: recipeId
+	}
+
+	let review = {
+		title: reviewItem.title,
+		content: reviewItem.content,
+		userName: userName,
+		userId: userId
+	}
+
+	Recipe.update(searchQuery, { $push: { receivedReviews: review } }, function(err, recipe){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to review this recipe."});
+        } else {
+			res.status(200).send({message: `The review has been added.`})
 		}
 	});
 };

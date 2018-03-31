@@ -39,12 +39,38 @@ let RecipeSchema = mongoose.Schema({
     }],
     categories: [String],
     receivedReviews: [{
-        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        reviewId: {type: mongoose.Schema.Types.ObjectId, ref: 'Review'}
-    }],
+		title: {
+			type: String,
+			required: true
+		},
+		content: {
+			type: String
+		},
+		createdDate: {
+			type: Date,
+			default: Date.now()
+		},
+		userName: {
+			type: String, 
+			required: true
+		},
+		userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	}],
+	
     receivedRatings: [{
-        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        ratingId: {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'}
+		score: {
+			type: String,
+			required: true
+		},
+		createdDate: {
+			type: Date,
+			default: Date.now()
+		},
+		userName: {
+			type: String, 
+			required: true
+		},
+		userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     }],
 });
 

@@ -42,8 +42,7 @@ let UserSchema = mongoose.Schema({
         id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     }],
     addedRecipeReviews: [{
-        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
-        reviewId: {type: mongoose.Schema.Types.ObjectId, ref: 'Review'}
+        recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'}
     }],
     addedUserReviews: [{
         userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -55,7 +54,6 @@ let UserSchema = mongoose.Schema({
     }],
     addedRecipeRatings: [{
         recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
-        ratingId: {type: mongoose.Schema.Types.ObjectId, ref: 'Rating'}
     }],
     addedUserRatings: [{
         userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},

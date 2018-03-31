@@ -24,4 +24,10 @@ module.exports = function(app){
 
 	//params - authorId String
 	app.post('/api/recipe/addNewRecipe', recipeController.addNewRecipe)
+
+	//params - userId, userName, recipeId, ratingScore 
+	app.post('/api/recipe/rateRecipe', recipeController.addRating)
+
+	//params - userId, userName, recipeId, review
+	app.post('/api/recipe/reviewRecipe', recipeController.addReview)
 }
