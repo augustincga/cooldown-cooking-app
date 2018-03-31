@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar'; 
 
 import AvatarMenuContainer from '../AvatarMenuContainer/AvatarMenuContainer'
+import './Header.css'
 
 class Header extends Component {
 	constructor(props) {
@@ -13,9 +14,14 @@ class Header extends Component {
 
 	render() {
 		return (
-			<AppBar
-				iconElementLeft={<AvatarMenuContainer/>}
-			/>
+			<div>
+				<AppBar
+					iconElementLeft={<AvatarMenuContainer/>}
+				/>
+				<div className="header__search-recipe" onClick={this.props.onSearchRecipes}>
+					Search recipes
+				</div>
+			</div>
 		);
 	}
 }

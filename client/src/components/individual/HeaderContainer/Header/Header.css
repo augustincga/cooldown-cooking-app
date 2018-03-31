@@ -1,0 +1,9 @@
+.header__search-recipe { 
+	cursor: pointer;
+	position: absolute;
+	z-index: 9999;
+	top: 22px;
+	left: 200px;
+	color: #273746;
+	font-size: 18px;
+}
