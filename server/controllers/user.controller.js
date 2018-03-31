@@ -88,14 +88,3 @@ exports.getSavedForLaterRecipes = function(req, res) {
 		}
 	});
 }
-
-exports.reviewRecipe = function(req, res) {
-    if(!req.body) {
-        return res.status(400).send({message: req.body});
-	}
-
-	let review = {
-
-	}
-	
-};

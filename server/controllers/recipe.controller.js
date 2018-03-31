@@ -68,6 +68,22 @@ exports.getMostRecentRecipes = function(req, res) {
 	});
 };
 
+exports.getAllRecipes = function(req, res) {
+	if(!req.body) {
+		res.status(500).send({message: req.body});
+	};
+
+	Recipe.find({}).limit(10).exec(function(err, recipes){
+		if(err) {
+			res.status(500).send({message: "Some error occurred while searching for the Recipes."})
+		} else if(recipes && recipes !== null) {
+			res.status(200).send(recipes);
+		} else {
+			res.status(404).send({message: "Could not find any recipes."});
+		}
+	});
+};
+
 exports.getSimilarRecipes = function(req, res) {
 	if(!req.body) {
 		res.status(500).send({message: req.body});

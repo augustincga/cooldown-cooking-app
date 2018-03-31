@@ -9,6 +9,8 @@ module.exports = function(app){
 
 	app.get('/api/recipe/getMostRecentRecipes', recipeController.getMostRecentRecipes)
 
+	app.get('/api/recipe/getAllRecipes', recipeController.getAllRecipes)
+
 	//params - ingredients []
 	app.post('/api/recipe/getSimilarRecipes', recipeController.getSimilarRecipes)
 
