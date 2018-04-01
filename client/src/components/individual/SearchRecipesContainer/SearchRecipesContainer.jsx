@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import SearchRecipes from './SearchRecipes/SearchRecipes'
 import RecipesTilesListContainer from '../../shared/RecipesTilesListContainer/RecipesTilesListContainer'
+import SearchRecipesMenuController from './SearchRecipesMenuContainer/SearchRecipesMenuContainer'
 import {errorNotification} from '../../shared/constants'
 
 class SearchRecipesContainer extends Component {
@@ -20,7 +21,7 @@ class SearchRecipesContainer extends Component {
 	render() {
 		return (
 			<div>
-				<SearchRecipes />
+				<SearchRecipesMenuController/>
 				<RecipesTilesListContainer recipesList = {this.state.recipesDataSet}/>
 			</div>
 		);

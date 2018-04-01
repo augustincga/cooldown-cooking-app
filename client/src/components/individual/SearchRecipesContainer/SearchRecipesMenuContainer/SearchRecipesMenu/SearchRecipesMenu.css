@@ -1,0 +1,23 @@
+.search-recipes-menu__wrapper {
+
+}
+
+.sidebar__wrapper {
+	top: 64px !important;
+}
+
+.search-recipes-menu__ingredients-dropdown {
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+.search-recipes-menu__filters-dropdown {
+	margin-bottom: 45px;
+}
+
+.search-recipes-menu__search-recipes-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 15px;
+}

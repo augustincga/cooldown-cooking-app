@@ -16,12 +16,14 @@ class RecipeTileItem extends Component {
 			<div className="recipe-tile__wrapper">
 				<Card>
 					<CardMedia
-						overlay={<CardTitle title={this.props.recipeData.title} subtitle="Overlay subtitle" />}
+						overlay={<CardTitle title={this.props.recipeData.title}/>}
 					>
 						<img src={this.props.recipeData.largeImage} alt="" />
 					</CardMedia>
 					<CardText>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						<div className="">
+							<i className="fa fa-hourglass"> {this.props.recipeData.cookingTime}</i>
+						</div>	
 					</CardText>
 				</Card>
 			</div>

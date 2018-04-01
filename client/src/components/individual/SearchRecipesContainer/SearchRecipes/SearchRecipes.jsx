@@ -13,7 +13,7 @@ class SearchRecipes extends Component {
 	render() {
 		return (
 			<div>
-				Search Recipes has been mounted.
+				
 			</div>
 		);
 	}

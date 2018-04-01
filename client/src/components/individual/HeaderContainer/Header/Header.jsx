@@ -14,9 +14,10 @@ class Header extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="header__wrapper">
 				<AppBar
 					iconElementLeft={<AvatarMenuContainer/>}
+					className="header__app-bar"
 				/>
 				<div className="header__search-recipe" onClick={this.props.onSearchRecipes}>
 					Search recipes

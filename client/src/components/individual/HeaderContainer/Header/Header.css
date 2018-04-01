@@ -7,3 +7,10 @@
 	color: #273746;
 	font-size: 18px;
 }
+
+.header__wrapper {
+	position: fixed !important;
+	top: 0px !important;
+	width: 100%;
+	z-index: 99999;
+}

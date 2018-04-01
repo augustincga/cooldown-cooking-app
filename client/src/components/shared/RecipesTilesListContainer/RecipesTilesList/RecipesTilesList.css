@@ -1,8 +1,7 @@
 .recipe-tiles-list__wrapper {
-	width: 100vh;
 	height: auto;
 	margin-left: 220px;
-	margin-top: 80px;
+	margin-top: 60px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
