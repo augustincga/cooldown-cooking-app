@@ -1,0 +1,15 @@
+.add-ingredients__wrapper {
+	width: 150px !important;
+}
+
+.add-ingredients__wrapper > div:first-child {
+	width: 100% !important;
+}
+
+.add-ingredients__search-wrapper {
+	width: 100% !important;
+}
+
+.add-ingredients__suggestions-list {
+	width: 30px !important;
+}

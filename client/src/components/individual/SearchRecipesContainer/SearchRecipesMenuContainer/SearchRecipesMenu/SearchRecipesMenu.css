@@ -21,3 +21,15 @@
 	align-items: center;
 	margin-bottom: 15px;
 }
+
+.search-recipes-menu__ingredients-dropdown-title {
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.search-recipes-menu__ingredients-dropdown-wrapper {
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+}
