@@ -4,6 +4,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton'
+import Delete from 'material-ui/svg-icons/action/delete';
 
 
 import './SearchRecipesMenu.css'
@@ -30,6 +31,7 @@ class SearchRecipesMenu extends Component {
 					<DropDownMenu 
 						maxHeight={300} 
 						value = {"default"}
+						onChange={this.props.onDeleteIngredient}
 						anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
 						targetOrigin={{ vertical: 'top', horizontal: 'left' }}
 						autoWidth={false}
@@ -66,8 +68,15 @@ class SearchRecipesMenu extends Component {
 		let ingredients = [];
 		ingredients.push(<MenuItem value={"default"} primaryText="Selected Ingredients" key="default"/>);
 		this.props.selectedIngredients.forEach(function(ingredient, index){
-			ingredients.push(<MenuItem value={index} key={index} primaryText={ingredient.name} />);
-		})
+			ingredients.push(
+				<MenuItem 
+					value={index} 
+					key={index} 
+					primaryText={ingredient.name} 
+					rightIcon={<Delete />}
+				/>
+			);
+		}.bind(this))
 		return ingredients;
 	}
 }

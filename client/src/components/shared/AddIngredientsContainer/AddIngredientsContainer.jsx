@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import AddIngredients from './AddIngredients/AddIngredients';
-import {errorNotification} from '../constants'
+import {errorNotification, successNotification} from '../constants'
 
 const hardcodedIngredientsList = [{name: "Egg"}, {name: "Milk"}, {name: "Orange"}, {name: "Apple"}]
 
@@ -12,28 +12,48 @@ class AddIngredientsContainer extends Component {
 			
 		}
 		this._onSelectIngredient = this._onSelectIngredient.bind(this);
+		this._onSelectValidIngredient = this._onSelectValidIngredient.bind(this);
 	}
 
 	render() {
 		return (
 			<div>
-				<AddIngredients onSelectIngredient={this._onSelectIngredient} ingredientsList = {hardcodedIngredientsList}/>
+				<AddIngredients
+					ref={(childInstance) => { this.addIngredientAutocompleteRef = childInstance; }} 
+					onSelectIngredient={this._onSelectIngredient}
+					ingredientsList={hardcodedIngredientsList} />
 			</div>
 		);
 	}
 
 
-	//TODO - also check for case insensitive
 	_onSelectIngredient(ingredient, index) {
-		let isTypedIngredientAvailable = hardcodedIngredientsList.filter((ingredientInList) => ingredientInList.name == ingredient).length > 0 ? true : false
+		let ingredientIndex = null;
+		let isTypedIngredientAvailable = false;
+
+		hardcodedIngredientsList.forEach(function(ingredientInList, index){
+			if(ingredientInList.name.toLowerCase() === ingredient.toLowerCase()) {
+				ingredientIndex = index;
+				isTypedIngredientAvailable = true;
+				return;
+			}
+		})
+
 		if(index === -1 && isTypedIngredientAvailable) {
-			let ingredientObject = {name: ingredient}
-			this.props.onSelectIngredientTrigger(ingredientObject);
-		}else if(index !== -1){
-			this.props.onSelectIngredientTrigger(ingredient);
+			let ingredientObject = hardcodedIngredientsList[ingredientIndex];
+			this._onSelectValidIngredient(ingredientObject);
+		} else if(index !== -1){
+			this._onSelectValidIngredient(ingredient);
 		} else {
 			errorNotification("Ingredient is not available");
 		}
+	}
+
+	_onSelectValidIngredient(ingredient) {
+		this.props.onSelectIngredientTrigger(ingredient);
+		this.addIngredientAutocompleteRef.autocompleteInput.setState({searchText:''});
+		this.addIngredientAutocompleteRef.autocompleteInput.focus();
+		successNotification("Ingredient was added");
 	}
 }
 

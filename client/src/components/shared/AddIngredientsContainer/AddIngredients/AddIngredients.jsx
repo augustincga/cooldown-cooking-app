@@ -29,6 +29,7 @@ class AddIngredients extends Component {
 					dataSource={this.props.ingredientsList}
 					dataSourceConfig={dataSourceConfig}
 					onNewRequest = {this.props.onSelectIngredient}
+					ref={(item) => { this.autocompleteInput = item; }} 
 				/>
 			</div>
 		);
