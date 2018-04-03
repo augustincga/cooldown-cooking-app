@@ -34,6 +34,10 @@ class AddIngredients extends Component {
 			</div>
 		);
 	}
+
+	componentWillReceiveProps() {
+		this.forceUpdate();
+	}
 }
 
 export default AddIngredients;

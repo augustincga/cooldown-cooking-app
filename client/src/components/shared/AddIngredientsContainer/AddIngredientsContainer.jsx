@@ -3,16 +3,19 @@ import React, { Component } from 'react';
 import AddIngredients from './AddIngredients/AddIngredients';
 import {errorNotification, successNotification} from '../constants'
 
-const hardcodedIngredientsList = [{name: "Egg"}, {name: "Milk"}, {name: "Orange"}, {name: "Apple"}]
-
 class AddIngredientsContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			
+			ingredientsList: [],
 		}
 		this._onSelectIngredient = this._onSelectIngredient.bind(this);
 		this._onSelectValidIngredient = this._onSelectValidIngredient.bind(this);
+		this._getIngredientsList = this._getIngredientsList.bind(this);
+	}
+
+	componentWillMount() {
+		this._getIngredientsList();
 	}
 
 	render() {
@@ -21,7 +24,7 @@ class AddIngredientsContainer extends Component {
 				<AddIngredients
 					ref={(childInstance) => { this.addIngredientAutocompleteRef = childInstance; }} 
 					onSelectIngredient={this._onSelectIngredient}
-					ingredientsList={hardcodedIngredientsList} />
+					ingredientsList={this.state.ingredientsList} />
 			</div>
 		);
 	}
@@ -31,7 +34,7 @@ class AddIngredientsContainer extends Component {
 		let ingredientIndex = null;
 		let isTypedIngredientAvailable = false;
 
-		hardcodedIngredientsList.forEach(function(ingredientInList, index){
+		this.state.ingredientsList.forEach(function(ingredientInList, index){
 			if(ingredientInList.name.toLowerCase() === ingredient.toLowerCase()) {
 				ingredientIndex = index;
 				isTypedIngredientAvailable = true;
@@ -40,7 +43,7 @@ class AddIngredientsContainer extends Component {
 		})
 
 		if(index === -1 && isTypedIngredientAvailable) {
-			let ingredientObject = hardcodedIngredientsList[ingredientIndex];
+			let ingredientObject = this.state.ingredientsList[ingredientIndex];
 			this._onSelectValidIngredient(ingredientObject);
 		} else if(index !== -1){
 			this._onSelectValidIngredient(ingredient);
@@ -55,6 +58,31 @@ class AddIngredientsContainer extends Component {
 		this.addIngredientAutocompleteRef.autocompleteInput.focus();
 		successNotification("Ingredient was added");
 	}
+
+	_getIngredientsList() {
+		fetch('http://localhost:3001/api/ingredient/getIngredients', {
+			headers: {
+				'Accept': 'application/json',
+                'Content-Type': 'application/json'
+			},
+			method: 'get',
+		}).then(function(response){
+			if(response.status === 200) {
+				response.json().then((ingredients) => {
+					let formattedIngredientsList = ingredients.map((ingredient) => {
+						let formattedIngredientItem = {};
+						formattedIngredientItem.name = ingredient.name;
+						return formattedIngredientItem
+					});
+					this.setState({ingredientsList: formattedIngredientsList});
+				})
+			} else {
+				response.json().then((error) => {
+					errorNotification(error.message);
+				})
+			}
+		}.bind(this))
+	};
 }
 
 export default AddIngredientsContainer;
