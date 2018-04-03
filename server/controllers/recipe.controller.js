@@ -368,3 +368,13 @@ exports.addReview = function(req, res) {
 		}
 	});
 };
+
+exports.getFiltersFromRecipes = function(req, res) {
+	Recipe.distinct('categories', function(err, filters) {
+		if(err) {
+			res.status(500).send({message: err});
+		} else {
+			res.status(200).send(filters);
+		}
+	});
+};
