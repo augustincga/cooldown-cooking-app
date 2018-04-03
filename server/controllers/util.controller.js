@@ -1,6 +1,7 @@
 var FoodProduct = require('../models/food-product.model.js');
 var FoodCategory = require('../models/food-category.model');
 var Recipe = require('../models/recipe.model.js')
+var Ingredient = require('../models/ingredient.model');
 
 exports.populateRecipeCollection = function(req, res) {
     if(!req.body) {
@@ -29,7 +30,6 @@ exports.populateRecipeCollection = function(req, res) {
             largeImage: recipe.largeImg,
             ingredients: [],
             categories: [recipe.categories],
-
         }
         
         if(recipe.instructions === undefined) {
@@ -96,4 +96,16 @@ exports.populateFoodProductCategoryCollections = function(req, res) {
             new FoodCategory(categoryProductItem).save();
         });
     });
+};
+
+exports.populateIngredientCollectionFromRecipeCollection = function(req, res) {
+	Recipe.distinct('ingredients.name', function(err, ingredients){
+		if(err) {
+			res.status(500).send({message: err});
+		} else {
+			ingredients.forEach(function(ingredient){
+				new Ingredient({name: ingredient}).save();
+			});
+		}
+	});
 };

@@ -9,5 +9,4 @@ module.exports = function(app){
 	app.post('/api/user/saveRecipeForLater', userController.saveRecipeForLater);
 	
 	app.post('/api/user/getSavedForLaterRecipes', userController.getSavedForLaterRecipes);
-
 };
