@@ -4,6 +4,7 @@
 
 .sidebar__wrapper {
 	top: 64px !important;
+	/* overflow-x: hidden !important; */
 }
 
 .search-recipes-menu__ingredients-dropdown {
@@ -22,7 +23,7 @@
 	margin-bottom: 15px;
 }
 
-.search-recipes-menu__ingredients-dropdown-title {
+.search-recipes-menu__ingredients-dropdown-title, .search-recipes-menu__filters-title {
 	font-size: 12px;
 	font-weight: bold;
 	text-align: center;
@@ -32,4 +33,11 @@
 	display: flex !important;
 	justify-content: center;
 	align-items: center;
+}
+
+.search-recipes-menu__filters-wrapper {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
 }

@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton'
 import Delete from 'material-ui/svg-icons/action/delete';
+import Checkbox from 'material-ui/Checkbox'
 
 
 import './SearchRecipesMenu.css'
@@ -59,9 +60,24 @@ class SearchRecipesMenu extends Component {
 							<AddIngredientsContainer onSelectIngredientTrigger = {this.props.onSelectIngredientTrigger}/>
 						</div>
 					<Divider/>
+						<h1 className="search-recipes-menu__filters-title">Select some filters</h1>
+						<div className="search-recipes-menu__filters-wrapper">
+						{this.props.filtersList.map((filterItem, index) => 
+							<Checkbox
+								label={filterItem}
+								key={filterItem}
+								onCheck={this.props.onCheckFilter}
+								value={filterItem}
+							/>
+							)}
+						</div>
 				</Drawer>
 			</div>
 		);
+	}
+
+	componentWillReceiveProps(){
+		this.forceUpdate();
 	}
 
 	_formatSelectedIngredientsList() {

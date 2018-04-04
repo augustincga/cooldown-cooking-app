@@ -34,8 +34,10 @@ class AddIngredientsContainer extends Component {
 		let ingredientIndex = null;
 		let isTypedIngredientAvailable = false;
 
+		ingredient = ingredient.hasOwnProperty('name') ? ingredient : {name: ingredient}
+
 		this.state.ingredientsList.forEach(function(ingredientInList, index){
-			if(ingredientInList.name.toLowerCase() === ingredient.toLowerCase()) {
+			if(ingredientInList.name.toLowerCase() === ingredient.name.toLowerCase()) {
 				ingredientIndex = index;
 				isTypedIngredientAvailable = true;
 				return;
