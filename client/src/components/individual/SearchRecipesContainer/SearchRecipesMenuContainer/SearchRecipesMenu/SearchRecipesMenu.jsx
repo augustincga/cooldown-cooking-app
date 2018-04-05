@@ -19,6 +19,7 @@ class SearchRecipesMenu extends Component {
 
 		}
 		this._formatSelectedIngredientsList = this._formatSelectedIngredientsList.bind(this);
+		this._formatSelectedFiltersList = this._formatSelectedFiltersList.bind(this);
 	}
 
 	render() {
@@ -30,7 +31,7 @@ class SearchRecipesMenu extends Component {
 					open={true}
 				>
 					<DropDownMenu 
-						maxHeight={300} 
+						maxHeight={150} 
 						value = {"default"}
 						onChange={this.props.onDeleteIngredient}
 						anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
@@ -42,14 +43,15 @@ class SearchRecipesMenu extends Component {
      				</DropDownMenu>
 
 					<DropDownMenu 
-						maxHeight={300} 
-						value={1}
+						maxHeight={150} 
+						value = {"default"}
+						onChange={this.props.onDeleteFilter}
 						anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
 						targetOrigin={{ vertical: 'top', horizontal: 'left' }}
 						autoWidth={false}
 						className="search-recipes-menu__filters-dropdown"
 					>
-						<MenuItem value={1} primaryText="Selected Filters" />
+						{this._formatSelectedFiltersList()}
      				</DropDownMenu>
 					 <div className="search-recipes-menu__search-recipes-btn">
 					 	<RaisedButton label="Search" primary={true} /> 					 
@@ -66,8 +68,8 @@ class SearchRecipesMenu extends Component {
 							<Checkbox
 								label={filterItem}
 								key={filterItem}
-								onCheck={this.props.onCheckFilter}
-								value={filterItem}
+								checked={this.props.checkedFilters[filterItem]}
+								onCheck={(e, isChecked) => this.props.onCheckFilter(e, isChecked, filterItem)}
 							/>
 							)}
 						</div>
@@ -75,6 +77,7 @@ class SearchRecipesMenu extends Component {
 			</div>
 		);
 	}
+
 
 	componentWillReceiveProps(){
 		this.forceUpdate();
@@ -94,6 +97,22 @@ class SearchRecipesMenu extends Component {
 			);
 		}.bind(this))
 		return ingredients;
+	}
+
+	_formatSelectedFiltersList() {
+		let filters = [];
+		filters.push(<MenuItem value={"default"} primaryText="Selected Filters" key="default"/>);
+		this.props.selectedFilters.forEach(function(filter, index){
+			filters.push(
+				<MenuItem 
+					value={index} 
+					key={index} 
+					primaryText={filter} 
+					rightIcon={<Delete />}
+				/>
+			);
+		}.bind(this))
+		return filters;
 	}
 }
 

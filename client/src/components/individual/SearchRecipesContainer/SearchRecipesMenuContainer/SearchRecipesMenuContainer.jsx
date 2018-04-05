@@ -8,11 +8,13 @@ class SearchRecipesMenuContainer extends Component {
 		super(props);
 		this.state = {
 			filtersList: [],
+			selectedFilters: [],
+			checkedFilters: {},
 			selectedIngredients: [],
-			selectedFilters: []
 		}
 		this._onSelectIngredientTrigger = this._onSelectIngredientTrigger.bind(this)
 		this._onDeleteIngredient = this._onDeleteIngredient.bind(this)
+		this._onDeleteFilter = this._onDeleteFilter.bind(this)
 		this._getFilters = this._getFilters.bind(this)
 		this._onCheckFilter = this._onCheckFilter.bind(this)
 	}
@@ -27,7 +29,10 @@ class SearchRecipesMenuContainer extends Component {
 				<SearchRecipesMenu 
 				onSelectIngredientTrigger = {this._onSelectIngredientTrigger} 
 				selectedIngredients = {this.state.selectedIngredients}
+				selectedFilters = {this.state.selectedFilters}
+				checkedFilters = {this.state.checkedFilters}
 				onDeleteIngredient = {this._onDeleteIngredient}
+				onDeleteFilter = {this._onDeleteFilter}
 				filtersList = {this.state.filtersList}
 				onCheckFilter = {this._onCheckFilter}
 			/>
@@ -53,6 +58,25 @@ class SearchRecipesMenuContainer extends Component {
 		});
 	}
 
+	_onDeleteFilter(event, filterIndexInDropdown) {
+		if(filterIndexInDropdown === 0) {
+			return;
+		}
+
+		let filterIndexInList = filterIndexInDropdown - 1;
+		let selectedFiltersCopy = this.state.selectedFilters.slice();
+		let filterName = selectedFiltersCopy[filterIndexInList];
+		selectedFiltersCopy.splice(filterIndexInList, 1);
+		
+		this.setState({
+			selectedFilters: selectedFiltersCopy,
+			checkedFilters : {...this.state.checkedFilters, [filterName]: false}
+		}, function(){
+			errorNotification('Filter was deleted');
+
+		});
+	}
+
 	_getFilters() {
 		fetch('http://localhost:3001/api/recipe/getFiltersFromRecipes', {
 			headers: {
@@ -63,7 +87,11 @@ class SearchRecipesMenuContainer extends Component {
 		}).then(function(response){
 			if(response.status === 200) {
 				response.json().then((filters) => {
-					this.setState({filtersList: filters});
+					let checkedFiltersMap = {}
+					filters.forEach(function(filter){
+						checkedFiltersMap[filter] = false;
+					}) 
+					this.setState({filtersList: filters, checkedFilters: checkedFiltersMap});
 				})
 			} else {
 				response.json().then((error) => {
@@ -73,10 +101,20 @@ class SearchRecipesMenuContainer extends Component {
 		}.bind(this))
 	}
 
-	_onCheckFilter(x,y,z) {
-		console.log(x, y, z);
+	_onCheckFilter(event, isChecked, label) {
+		if(isChecked) {
+			this.setState({
+				selectedFilters: [...this.state.selectedFilters, label],
+				checkedFilters : {...this.state.checkedFilters, [label]: isChecked}
+			});
+		} else {
+			let selectedFiltersCopy = this.state.selectedFilters.filter((filterItem) => filterItem !== label);
+			this.setState({
+				selectedFilters: selectedFiltersCopy,
+				checkedFilters : {...this.state.checkedFilters, [label]: ![label]}
+			});
+		}
 	}
-	
 }
 
 export default SearchRecipesMenuContainer;
