@@ -17,6 +17,7 @@ class SearchRecipesMenuContainer extends Component {
 		this._onDeleteFilter = this._onDeleteFilter.bind(this)
 		this._getFilters = this._getFilters.bind(this)
 		this._onCheckFilter = this._onCheckFilter.bind(this)
+		this._onRecipesSearch = this._onRecipesSearch.bind(this)
 	}
 
 	componentWillMount() {
@@ -35,6 +36,7 @@ class SearchRecipesMenuContainer extends Component {
 				onDeleteFilter = {this._onDeleteFilter}
 				filtersList = {this.state.filtersList}
 				onCheckFilter = {this._onCheckFilter}
+				onRecipesSearch = {this._onRecipesSearch}
 			/>
 			</div>
 		);
@@ -114,6 +116,34 @@ class SearchRecipesMenuContainer extends Component {
 				checkedFilters : {...this.state.checkedFilters, [label]: ![label]}
 			});
 		}
+	}
+
+	_onRecipesSearch() {
+		let selectedIngredientsFormatted = this.state.selectedIngredients.map((ingredient) => ingredient.name);
+		
+		let dataRequest = {
+			filters: this.state.selectedFilters,
+			ingredients: selectedIngredientsFormatted
+		}
+
+		fetch('http://localhost:3001/api/recipe/getRecipesByFilters', {
+			headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+			method: 'post',
+			body: JSON.stringify(dataRequest)
+		}).then(function(response){
+			if(response.status === 200) {
+				response.json().then((recipes) => {
+					console.log(recipes)
+				})
+			} else {
+				response.json().then((error) => {
+					errorNotification(error.message);
+				})
+			}
+		}.bind(this))
 	}
 }
 

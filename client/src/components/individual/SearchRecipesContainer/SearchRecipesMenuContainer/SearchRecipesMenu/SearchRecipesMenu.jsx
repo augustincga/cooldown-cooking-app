@@ -54,7 +54,7 @@ class SearchRecipesMenu extends Component {
 						{this._formatSelectedFiltersList()}
      				</DropDownMenu>
 					 <div className="search-recipes-menu__search-recipes-btn">
-					 	<RaisedButton label="Search" primary={true} /> 					 
+					 	<RaisedButton label="Search" primary={true} onClick = {this.props.onRecipesSearch}/> 					 
 					 </div>
 					<Divider/>
 						<h1 className="search-recipes-menu__ingredients-dropdown-title">Add your available ingredients</h1>
