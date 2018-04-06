@@ -44,51 +44,51 @@ let ObjectId = require('mongodb').ObjectID;
 // 	});
 // };
 
-exports.getMostRecentRecipes = function(req, res) {
-	if(!req.body) {
-		res.status(500).send({message: req.body});
+exports.getMostRecentRecipes = function (req, res) {
+	if (!req.body) {
+		res.status(500).send({ message: req.body });
 	};
 
-	let oneDayInterval = Date.now() / 1000 - 24*60*60;
+	let oneDayInterval = Date.now() / 1000 - 24 * 60 * 60;
 
-	let searchQuery = { 
+	let searchQuery = {
 		_id: {
 			$gt: ObjectId.createFromTime(oneDayInterval)
 		}
 	}
 
-	Recipe.find(searchQuery, function(err, recipes){
-		if(err) {
-			res.status(500).send({message: "Some error occurred while searching for the Recipes."})
-		} else if(recipes && recipes !== null) {
+	Recipe.find(searchQuery, function (err, recipes) {
+		if (err) {
+			res.status(500).send({ message: "Some error occurred while searching for the Recipes." })
+		} else if (recipes && recipes !== null) {
 			res.status(200).send(recipes);
 		} else {
-			res.status(404).send({message: "Could not find the most recent recipes."});
+			res.status(404).send({ message: "Could not find the most recent recipes." });
 		}
 	});
 };
 
-exports.getAllRecipes = function(req, res) {
-	if(!req.body) {
-		res.status(500).send({message: req.body});
+exports.getAllRecipes = function (req, res) {
+	if (!req.body) {
+		res.status(500).send({ message: req.body });
 	};
 
-	Recipe.find({}).limit(10).exec(function(err, recipes){
-		if(err) {
-			res.status(500).send({message: "Some error occurred while searching for the Recipes."})
-		} else if(recipes && recipes !== null) {
+	Recipe.find({}).limit(10).exec(function (err, recipes) {
+		if (err) {
+			res.status(500).send({ message: "Some error occurred while searching for the Recipes." })
+		} else if (recipes && recipes !== null) {
 			res.status(200).send(recipes);
 		} else {
-			res.status(404).send({message: "Could not find any recipes."});
+			res.status(404).send({ message: "Could not find any recipes." });
 		}
 	});
 };
 
-exports.getSimilarRecipes = function(req, res) {
-	if(!req.body) {
-		res.status(500).send({message: req.body});
+exports.getSimilarRecipes = function (req, res) {
+	if (!req.body) {
+		res.status(500).send({ message: req.body });
 	};
-	
+
 	let ingredients = req.body.ingredients;
 
 	Recipe.aggregate([
@@ -126,8 +126,6 @@ exports.getSimilarRecipes = function(req, res) {
 };
 
 
-
-//TODO - get recipes containing requested array + other ingredients
 exports.getRecipesByFilters = function (req, res) {
 	if (!req.body) {
 		res.status(500).send({ message: req.body });
@@ -164,12 +162,50 @@ exports.getRecipesByFilters = function (req, res) {
 				}
 			}
 		], function (err, recipes) {
-			if (err) {
-				res.status(500).send({ message: "Some error occurred while searching for the Recipes." })
-			} else if (recipes && recipes !== null) {
+			if (recipes && recipes.length < 50) {			//If recipes not enough, search similar recipes by ingredients
+				let alreadyFoundRecipesIds = [];
+				recipes.forEach((recipe) => { alreadyFoundRecipesIds.push(recipe._id) });
+				Recipe.aggregate([
+					{
+						$match: {
+							'_id': { '$nin': alreadyFoundRecipesIds }
+						}
+					},
+					{
+						$match: {
+							'categories': { $all: filters }
+						}
+					},
+					{
+						$addFields: {
+							totalMatch: {
+								$size: {
+									$setIntersection: [ingredients, { $map: { input: "$ingredients", as: "ingredient", in: "$$ingredient.name" } }]
+								}
+							}
+						}
+					},
+					{
+						$sort: {
+							totalMatch: -1
+						}
+					},
+					{
+						$project: {
+							totalMatch: 0
+						}
+					},
+					{
+						$limit: 50 - recipes.length
+					}
+				], function (err, recipesLeft) {
+					if (recipesLeft) {
+						let recipesList = recipes.concat(recipesLeft);
+						res.status(200).send(recipesList);
+					}
+				});
+			} else if (recipes) {
 				res.status(200).send(recipes);
-			} else {
-				res.status(404).send({ message: "Could not find the recipes." });
 			}
 		});
 	} else if (filters && !ingredients) {
@@ -208,16 +244,52 @@ exports.getRecipesByFilters = function (req, res) {
 		], function (err, recipes) {
 			if (err) {
 				res.status(500).send({ message: "Some error occurred while searching for the Recipes." })
-			} else if (recipes && recipes !== null) {
-				res.status(200).send(recipes);
+			} else if (recipes && recipes.length < 50) {
+				let alreadyFoundRecipesIds = [];
+				recipes.forEach((recipe) => { alreadyFoundRecipesIds.push(recipe._id) });
+				Recipe.aggregate([
+					{
+						$match:
+							{
+								'_id': { '$nin': alreadyFoundRecipesIds }
+							}
+					},
+					{
+						$addFields: {
+							totalMatch: {
+								$size: {
+									$setIntersection: [ingredients, { $map: { input: "$ingredients", as: "ingredient", in: "$$ingredient.name" } }]
+								}
+							}
+						}
+					},
+					{
+						$sort: {
+							totalMatch: -1
+						}
+					},
+					{
+						$project: {
+							totalMatch: 0
+						}
+					},
+					{
+						$limit: 50 - recipes.length
+					}
+				], function (err, recipesLeft) {
+					if (recipesLeft) {
+						let recipesList = recipes.concat(recipesLeft);
+						res.status(200).send(recipesList);
+					}
+				});
 			} else {
-				res.status(404).send({ message: "Could not find the recipes." });
+				res.status(200).send(recipes);
 			}
 		});
 	}
 }
 
-exports.getRecipesByName = function(req, res) {
+exports.getRecipesByName = function (req, res) {
 	if (!req.body) {
 		res.status(500).send({ message: req.body });
 	};
@@ -228,18 +300,18 @@ exports.getRecipesByName = function(req, res) {
 		"title": { $regex: new RegExp(`.*${recipesName}.*`, 'i') }
 	};
 
-	Recipe.find(searchQuery, function(err, recipes){
-		if(err) {
-			res.status(500).send({message: "Some error occurred while searching for the Recipes."})
-		} else if(recipes && recipes.length > 0) {
+	Recipe.find(searchQuery, function (err, recipes) {
+		if (err) {
+			res.status(500).send({ message: "Some error occurred while searching for the Recipes." })
+		} else if (recipes && recipes.length > 0) {
 			res.status(200).send(recipes);
 		} else {
-			res.status(404).send({message: "Could not find recipes by required name."});
+			res.status(404).send({ message: "Could not find recipes by required name." });
 		}
 	})
 };
 
-exports.getRecipesByAuthorId = function(req, res) {
+exports.getRecipesByAuthorId = function (req, res) {
 	if (!req.body) {
 		res.status(500).send({ message: req.body });
 	};
@@ -247,21 +319,21 @@ exports.getRecipesByAuthorId = function(req, res) {
 	let authorId = req.body.authorId;
 
 	let searchQuery = {
-		"authorId" : authorId
+		"authorId": authorId
 	};
 
-	Recipe.find(searchQuery, function(err, recipes){
-		if(err) {
-			res.status(500).send({message: "Some error occurred while searching for the Recipes."})
-		} else if(recipes && recipes.length > 0) {
+	Recipe.find(searchQuery, function (err, recipes) {
+		if (err) {
+			res.status(500).send({ message: "Some error occurred while searching for the Recipes." })
+		} else if (recipes && recipes.length > 0) {
 			res.status(200).send(recipes);
 		} else {
-			res.status(404).send({message: "Could not find recipes by required author."});
+			res.status(404).send({ message: "Could not find recipes by required author." });
 		}
 	})
 };
 
-exports.addNewRecipe = function(req, res) {
+exports.addNewRecipe = function (req, res) {
 	if (!req.body) {
 		res.status(500).send({ message: req.body });
 	};
@@ -288,18 +360,18 @@ exports.addNewRecipe = function(req, res) {
 		categories: recipe.categories.length > 0 ? recipe.categories : []
 	};
 
-	new Recipe(recipeDetails).save(function(err, recipe){
-		if(err) {
-			res.status(500).send({message: `Could not add ${recipe.title}`});
+	new Recipe(recipeDetails).save(function (err, recipe) {
+		if (err) {
+			res.status(500).send({ message: `Could not add ${recipe.title}` });
 		} else {
-			res.status(200).send({message: `${recipe.title} has been added.`});
+			res.status(200).send({ message: `${recipe.title} has been added.` });
 		}
 	});
 };
 
-exports.addRating = function(req, res) {
-    if(!req.body) {
-        return res.status(400).send({message: req.body});
+exports.addRating = function (req, res) {
+	if (!req.body) {
+		return res.status(400).send({ message: req.body });
 	}
 
 	let userId = req.body.userId;
@@ -317,27 +389,27 @@ exports.addRating = function(req, res) {
 		userId: userId
 	}
 
-	Recipe.find({_id: recipeId, "receivedRatings.userId": userId}, function(err, foundItem) {
-		if(err) {
-			res.status(500).send({message: "There was an error trying to rate this recipe."});
-		} else if(foundItem && foundItem.length === 0) {
-			Recipe.update(searchQuery, { $push: { receivedRatings: rating } }, function(err, recipe){
-				if(err) {
+	Recipe.find({ _id: recipeId, "receivedRatings.userId": userId }, function (err, foundItem) {
+		if (err) {
+			res.status(500).send({ message: "There was an error trying to rate this recipe." });
+		} else if (foundItem && foundItem.length === 0) {
+			Recipe.update(searchQuery, { $push: { receivedRatings: rating } }, function (err, recipe) {
+				if (err) {
 					console.log(err);
-					res.status(500).send({message: "There was an error trying to rate this recipe."});
+					res.status(500).send({ message: "There was an error trying to rate this recipe." });
 				} else {
-					res.status(200).send({message: `The rating has been added.`})
+					res.status(200).send({ message: `The rating has been added.` })
 				}
 			});
 		} else {
-			res.status(500).send({message: "You have already rated this recipe."});
+			res.status(500).send({ message: "You have already rated this recipe." });
 		}
 	})
 };
 
-exports.addReview = function(req, res) {
-    if(!req.body) {
-        return res.status(400).send({message: req.body});
+exports.addReview = function (req, res) {
+	if (!req.body) {
+		return res.status(400).send({ message: req.body });
 	}
 
 	let userId = req.body.userId;
@@ -359,20 +431,20 @@ exports.addReview = function(req, res) {
 		userId: userId
 	}
 
-	Recipe.update(searchQuery, { $push: { receivedReviews: review } }, function(err, recipe){
-        if(err) {
-            console.log(err);
-            res.status(500).send({message: "There was an error trying to review this recipe."});
-        } else {
-			res.status(200).send({message: `The review has been added.`})
+	Recipe.update(searchQuery, { $push: { receivedReviews: review } }, function (err, recipe) {
+		if (err) {
+			console.log(err);
+			res.status(500).send({ message: "There was an error trying to review this recipe." });
+		} else {
+			res.status(200).send({ message: `The review has been added.` })
 		}
 	});
 };
 
-exports.getFiltersFromRecipes = function(req, res) {
-	Recipe.distinct('categories', function(err, filters) {
-		if(err) {
-			res.status(500).send({message: err});
+exports.getFiltersFromRecipes = function (req, res) {
+	Recipe.distinct('categories', function (err, filters) {
+		if (err) {
+			res.status(500).send({ message: err });
 		} else {
 			res.status(200).send(filters);
 		}
