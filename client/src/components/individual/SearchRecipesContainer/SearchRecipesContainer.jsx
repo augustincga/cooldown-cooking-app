@@ -11,41 +11,27 @@ class SearchRecipesContainer extends Component {
 		this.state = {
 			recipesDataSet: []
 		}
-		this._getAllRecipes = this._getAllRecipes.bind(this);
+		this._onFetchRecipesByFilters = this._onFetchRecipesByFilters.bind(this);
 	}
 
 	componentWillMount() {
-		this._getAllRecipes();
+		
 	}
 
 	render() {
 		return (
 			<div>
-				<SearchRecipesMenuController/>
+				<SearchRecipesMenuController onFetchRecipesByFilters={this._onFetchRecipesByFilters}/>
 				<RecipesTilesListContainer recipesList = {this.state.recipesDataSet}/>
 			</div>
 		);
 	}
+	
+	_onFetchRecipesByFilters(recipes) {
+		this.setState({recipesDataSet: recipes});
+	}
 
-	_getAllRecipes() {
-        fetch('http://localhost:3001/api/recipe/getAllRecipes', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'get',
-        }).then(function (response) {
-            if(response.status === 200) {
-				response.json().then((data) => {
-					this.setState({recipesDataSet: data});
-				})
-			} else {
-				response.json().then((data) => {
-					errorNotification(data.message);
-				});
-            }
-        }.bind(this));
-    };
+
 }
 
 export default SearchRecipesContainer;

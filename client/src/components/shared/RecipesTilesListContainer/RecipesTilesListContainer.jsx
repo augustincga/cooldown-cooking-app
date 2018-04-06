@@ -21,7 +21,7 @@ class RecipesTilesListContainer extends Component {
 	componentWillReceiveProps(newProps) {
 		if (this.state.recipesList !== newProps.recipesList) {
 			this.setState({recipesList: newProps.recipesList}, () => {
-				console.log(this.state.recipesList);
+
 			});
 		}
 	}
