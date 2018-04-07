@@ -1,3 +1,7 @@
+.recipe-tile__wrapper-container {
+	display: inline-block;
+}
+
 .recipe-tile__wrapper {
 	width: 300px;
 	height: 300px;
@@ -15,4 +19,8 @@
 	max-height: auto !important;
 	width: auto !important;
 	height: auto !important;
+}
+
+.recipe-tile__image-wrapper {
+	cursor: pointer;
 }

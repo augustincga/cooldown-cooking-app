@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import Dialog from 'material-ui/Dialog';
 
 import './RecipeTileItem.css'
 
@@ -17,6 +18,8 @@ class RecipeTileItem extends Component {
 				<Card>
 					<CardMedia
 						overlay={<CardTitle title={this.props.recipeData.title}/>}
+						onClick={this.props.onRecipeTileItemClick}
+						className='recipe-tile__image-wrapper'
 					>
 						<img src={this.props.recipeData.largeImage} alt="" />
 					</CardMedia>
