@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import Home from './Home/Home'
 import HeaderContainer from '../HeaderContainer/HeaderContainer'
 import SearchRecipesContainer from '../SearchRecipesContainer/SearchRecipesContainer'
 import { cookies } from '../../shared/constants'

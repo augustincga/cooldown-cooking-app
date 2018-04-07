@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import Dialog from 'material-ui/Dialog';
 
 import './RecipeTileItem.css'
 

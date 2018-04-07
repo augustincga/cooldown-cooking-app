@@ -136,7 +136,6 @@ class SearchRecipesMenuContainer extends Component {
 		}).then(function(response){
 			if(response.status === 200) {
 				response.json().then((recipes) => {
-					console.log(recipes);
 					this.props.onFetchRecipesByFilters(recipes);
 				})
 			} else {

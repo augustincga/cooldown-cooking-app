@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 import RecipeTileItem from './RecipeTileItem/RecipeTileItem';
 import RecipeDetailsContainer from './RecipeDetailsContainer/RecipeDetailsContainer'

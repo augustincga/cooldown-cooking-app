@@ -95,7 +95,7 @@ class SearchRecipesMenu extends Component {
 					rightIcon={<Delete />}
 				/>
 			);
-		}.bind(this))
+		})
 		return ingredients;
 	}
 
@@ -111,7 +111,7 @@ class SearchRecipesMenu extends Component {
 					rightIcon={<Delete />}
 				/>
 			);
-		}.bind(this))
+		})
 		return filters;
 	}
 }
