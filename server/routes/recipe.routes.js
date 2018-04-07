@@ -34,4 +34,6 @@ module.exports = function(app){
 	app.post('/api/recipe/reviewRecipe', recipeController.addReview)
 
 	app.get('/api/recipe/getFiltersFromRecipes', recipeController.getFiltersFromRecipes)
+
+	app.get('/api/recipe/getRecipe/:id', recipeController.getRecipeById)
 }

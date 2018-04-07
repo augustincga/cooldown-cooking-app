@@ -450,3 +450,13 @@ exports.getFiltersFromRecipes = function (req, res) {
 		}
 	});
 };
+
+exports.getRecipeById = function (req, res) {
+	Recipe.find({_id: req.params.id}, function (err, recipe) {
+		if (err) {
+			res.status(500).send({ message: err });
+		} else {
+			res.status(200).send(recipe);
+		}
+	});
+};
