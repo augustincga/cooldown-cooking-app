@@ -23,9 +23,6 @@ class RecipeTileItem extends Component {
 						<img src={this.props.recipeData.largeImage} alt="" />
 					</CardMedia>
 					<CardText>
-						<div className="">
-							<i className="fa fa-hourglass"> {this.props.recipeData.cookingTime}</i>
-						</div>	
 					</CardText>
 				</Card>
 			</div>
