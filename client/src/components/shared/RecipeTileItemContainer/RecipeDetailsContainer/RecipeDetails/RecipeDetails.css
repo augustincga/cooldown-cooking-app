@@ -93,3 +93,52 @@
 .recipe-details__section-item .step-description {
 	margin-left: 5px;
 }
+
+/* .recipe-details__add-review-btn-wrapper {
+	width: 100%;
+	margin: 35px 0px 0px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+} */
+
+.recipe-details__add-review-wrapper h1 {
+	font-size: 14px;
+}
+
+.recipe-details__add-review-wrapper {
+	font-size: 12px;
+}
+
+.add-review-input, .add-review-textarea {
+    display: block;
+    margin-top: 2px;
+    padding: 5px 5px 5px 10px;
+    border-radius: 3px;
+    border: 0px;
+	box-sizing: border-box;
+	border-radius: 3px;
+	border: 1px solid #D3D3D0;
+	width: 200px;
+}
+
+.add-review-textarea {
+    height: 100px;
+}
+
+.add-review-fieldset {
+    padding-top: 15px;
+}
+
+.add-review-label {
+    font-weight: bold;
+}
+
+.add-review-btn-wrapper {
+	margin-top: 15px;
+}
+
+.add-review-btn-wrapper .add-review-btn {
+	
+}
