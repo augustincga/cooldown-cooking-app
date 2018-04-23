@@ -431,12 +431,12 @@ exports.addReview = function (req, res) {
 		userId: userId
 	}
 
-	Recipe.update(searchQuery, { $push: { receivedReviews: review } }, function (err, recipe) {
+	Recipe.findOneAndUpdate(searchQuery, { $push: { receivedReviews: review } },  {new: true}, function (err, recipe) {
 		if (err) {
 			console.log(err);
 			res.status(500).send({ message: "There was an error trying to review this recipe." });
 		} else {
-			res.status(200).send({ message: `The review has been added.` })
+			res.status(200).send(recipe)
 		}
 	});
 };
