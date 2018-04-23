@@ -16,12 +16,12 @@ class Header extends Component {
 		return (
 			<div className="header__wrapper">
 				<AppBar
-					iconElementLeft={<AvatarMenuContainer/>}
+					iconElementLeft={<AvatarMenuContainer onSearchRecipes= {this.props.onSearchRecipes}/>}
 					className="header__app-bar"
 				/>
-				<div className="header__search-recipe" onClick={this.props.onSearchRecipes}>
+				{/* <div className="header__search-recipe" onClick={this.props.onSearchRecipes}>
 					Search recipes
-				</div>
+				</div> */}
 			</div>
 		);
 	}

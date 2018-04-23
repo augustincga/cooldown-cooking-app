@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import MenuItem from 'material-ui/MenuItem';
 
 import('./AvatarMenu.css');
+
+
+const menuStyle = {
+	zIndex: 99999999
+};
 
 class AvatarMenu extends Component {
 	constructor(props) {
@@ -13,9 +21,16 @@ class AvatarMenu extends Component {
 
 	render() {
 		return (
-			<Avatar size={38} className='header__avatar-wrapper'>
-				{this.state.avatarLetter}
-		  </Avatar>
+			<IconMenu
+				iconButtonElement={<IconButton><Avatar className="header__avatar-wrapper">
+					{this.state.avatarLetter}
+				</Avatar></IconButton>}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+				targetOrigin={{ vertical: 'top', horizontal: 'left' }}
+			>
+				<MenuItem primaryText="SearchRecipes" onClick={this.props.onSearchRecipes}/>
+				<MenuItem primaryText="Sign out" />
+			</IconMenu>	
 		);
 	}
 }

@@ -14,7 +14,8 @@ class AvatarMenuContainer extends Component {
 	render() {
 		return (
 			<AvatarMenu 
-				avatarName = {this.state.userData.firstName}		
+				avatarName = {this.state.userData.firstName}
+				onSearchRecipes = {this.props.onSearchRecipes}		
 			/>
 		);
 	}
