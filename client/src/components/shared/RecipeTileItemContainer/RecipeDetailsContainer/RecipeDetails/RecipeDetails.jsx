@@ -4,25 +4,15 @@ import Divider from 'material-ui/Divider'
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-
-
 
 import './RecipeDetails.css'
-import {cookies} from '../../../constants'
-import {errorNotification} from '../../../constants'
-import {successNotification} from '../../../constants'
 
 class RecipeDetails extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			recipeDetailsData: this.props.recipeDetailsData
+			
 		}
-		this._getReviewDetails = this._getReviewDetails.bind(this);
-		this._onAddReview = this._onAddReview.bind(this);
-		this._exportRecipeAsPdf = this._exportRecipeAsPdf.bind(this);
 	}
 
 	render() {
@@ -35,40 +25,40 @@ class RecipeDetails extends Component {
 			>
 				<div className="recipe-details__header-buttons">
 					<div className="header-buttons__export-pdf">
-						<IconButton iconClassName="fa fa-save" onClick={this._exportRecipeAsPdf}/>
+						<IconButton iconClassName="fa fa-save" onClick={this.props.onExportRecipeAsPdf}/>
 					</div>
 				</div>
 				
 				<div className="recipe-details__content" id="sectionToPrint">
 					<div className="recipe-details__title">
-						<h1>{this.state.recipeDetailsData.title}</h1>
+						<h1>{this.props.recipeDetailsData.title}</h1>
 					</div>
 
 					<div className="recipe-details__header-wrapper">
 						<div className="recipe-picture">
-							<img src={this.state.recipeDetailsData.smallImage}/>
+							<img src={this.props.recipeDetailsData.smallImage}/>
 						</div>
 						<div className="recipe-data">
 							<div className="recipe-information-wrapper">
 								<div className="recipe-cooking-time">
-									<i className=""> {this.state.recipeDetailsData.cookingTime}</i>
+									<i className=""> {this.props.recipeDetailsData.cookingTime}</i>
 								</div>
 								<div className="recipe-servings">
-									<i className=""> {this.state.recipeDetailsData.servings}</i>
+									<i className=""> {this.props.recipeDetailsData.servings}</i>
 								</div>
 							</div>
 							<div className="recipe-nutrients-wrapper">
 								<div className="recipe-calories">
-									<i className=""> Calories: {this.state.recipeDetailsData.nutrients.calories}</i>
+									<i className=""> Calories: {this.props.recipeDetailsData.nutrients.calories}</i>
 								</div>
 								<div className="recipe-carbs">
-									<i className=""> Carbs: {this.state.recipeDetailsData.nutrients.carbohydrates}</i>
+									<i className=""> Carbs: {this.props.recipeDetailsData.nutrients.carbohydrates}</i>
 								</div>
 								<div className="recipe-protein">
-									<i className=""> Protein: {this.state.recipeDetailsData.nutrients.protein}</i>
+									<i className=""> Protein: {this.props.recipeDetailsData.nutrients.protein}</i>
 								</div>
 								<div className="recipe-fat">
-									<i className=""> Fat: {this.state.recipeDetailsData.nutrients.fat}</i>
+									<i className=""> Fat: {this.props.recipeDetailsData.nutrients.fat}</i>
 								</div>
 							</div>
 						</div>
@@ -78,7 +68,7 @@ class RecipeDetails extends Component {
 						<div className="recipe-details__section-title">
 							<h1>Ingredients</h1>
 						</div>
-						{this.state.recipeDetailsData.ingredients.map((ingredient, index) => {
+						{this.props.recipeDetailsData.ingredients.map((ingredient, index) => {
 							return (
 								<div className="recipe-details__section-item" key={ingredient.name}>
 									<i className="fa fa-caret-right"> 
@@ -95,7 +85,7 @@ class RecipeDetails extends Component {
 						<div className="recipe-details__section-title">
 							<h1>Steps</h1>
 						</div>
-						{this.state.recipeDetailsData.cookingSteps.map((step, index) => {
+						{this.props.recipeDetailsData.cookingSteps.map((step, index) => {
 							return (
 								<div className="recipe-details__section-item" key={step}>
 									<i className="fa fa-caret-right"> 
@@ -113,7 +103,7 @@ class RecipeDetails extends Component {
 							<h1>Reviews</h1>
 						</div>
 					</div>
-					{this.state.recipeDetailsData.receivedReviews.map((review, index) => {
+					{this.props.recipeDetailsData.receivedReviews.map((review, index) => {
 						return (
 							<div className="recipe-details__section-item" key={review.userName + index}>
 								<div className="review-container">
@@ -146,7 +136,7 @@ class RecipeDetails extends Component {
 								</fieldset>
 
 								<div className="add-review-btn-wrapper">
-									<RaisedButton className="add-review-btn" label="Add your review" primary={true} onClick={this._onAddReview}/>
+									<RaisedButton className="add-review-btn" label="Add your review" primary={true} onClick={this.props.onAddReview}/>
 								</div>
 							</form>
 						</div>
@@ -158,64 +148,9 @@ class RecipeDetails extends Component {
 			</Dialog>
 		);
 	}
-
-	_getReviewDetails() {
-		let user = cookies.get('user');
-
-		let reviewDetails = {
-			review: {
-				title: this.reviewTitle.value,
-				content: this.reviewDescription.value,
-			},
-			userName: user.fullName,
-			userId: user._id,
-			recipeId: this.state.recipeDetailsData._id
-		}
-
-		return reviewDetails;
-	}
-
-	_onAddReview() {
-		let reviewData = this._getReviewDetails();
-
-		fetch('http://localhost:3001/api/recipe/reviewRecipe', {
-			headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-			method: 'post',
-			body: JSON.stringify(reviewData)
-		}).then(function(response){
-			if(response.status === 200) {
-				response.json().then((recipe) => {
-					this.setState({
-						recipeDetailsData: recipe
-					});
-					successNotification("Your review has been added.");
-					this.reviewTitle.value = '';
-					this.reviewDescription.value = '';
-				})
-			} else {
-				response.json().then((error) => {
-					errorNotification(error.message);
-				})
-			}
-		}.bind(this))
-	}
-
-	_exportRecipeAsPdf() {
-		const sectionToPrint = document.getElementById('sectionToPrint');
-
-
-		html2canvas(sectionToPrint)
-			.then((canvas) => {
-				const imgData = canvas.toDataURL('image/png');
-				const pdf = new jsPDF();
-				pdf.addImage(imgData, 'JPEG', 10, 10, 180, 150);
-				pdf.save("recipe.pdf");
-			});
-	  
-
+	
+	componentWillReceiveProps(newProps) {
+		this.forceUpdate();
 	}
 }
 

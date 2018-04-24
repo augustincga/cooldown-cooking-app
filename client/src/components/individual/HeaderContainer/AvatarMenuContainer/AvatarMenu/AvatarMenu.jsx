@@ -7,10 +7,6 @@ import MenuItem from 'material-ui/MenuItem';
 import('./AvatarMenu.css');
 
 
-const menuStyle = {
-	zIndex: 99999999
-};
-
 class AvatarMenu extends Component {
 	constructor(props) {
 		super(props);
