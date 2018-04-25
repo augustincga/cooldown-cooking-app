@@ -6,16 +6,17 @@
 	overflow-y: auto !important;
 }
 
-.recipe-details__title {
-	text-align: center;
-}
-
 .recipe-details__title h1 {
 	font-size: 24px;
 }
 
 .recipe-details__header-buttons {
 	float: right;
+}
+
+.recipe-details__rating-wrapper {
+	float: right;
+	margin-top: 6px;
 }
 
 .header-buttons__export-pdf .fa-save{
@@ -50,6 +51,11 @@
 }
 
 .recipe-details__header-wrapper .recipe-servings {
+	display: flex;
+	margin-left: 30px;
+}
+
+.recipe-details__header-wrapper .recipe-stars-number {
 	display: flex;
 	margin-left: 30px;
 }

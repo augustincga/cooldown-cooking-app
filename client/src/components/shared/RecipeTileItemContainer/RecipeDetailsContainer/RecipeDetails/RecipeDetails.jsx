@@ -4,6 +4,7 @@ import Divider from 'material-ui/Divider'
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
+import ReactStars from 'react-stars';
 
 import './RecipeDetails.css'
 
@@ -13,6 +14,7 @@ class RecipeDetails extends Component {
 		this.state = {
 			
 		}
+		this._getFormattedAverageRating = this._getFormattedAverageRating.bind(this)
 	}
 
 	render() {
@@ -23,12 +25,24 @@ class RecipeDetails extends Component {
 				onRequestClose={this.props.onRecipeDetailsModalClose}
 				contentClassName='recipe-details__modal-wrapper'
 			>
+
+				<div className="recipe-details__rating-wrapper">
+					<div className="rating-stars">
+						<ReactStars
+							count={5}
+							onChange={this.props.onAddRating}
+							size={24}
+							value={this.props.addedUserRating}
+							color2={'rgb(0, 188, 212)'} 
+							half={false}
+						/>
+					</div>
+				</div>
 				<div className="recipe-details__header-buttons">
 					<div className="header-buttons__export-pdf">
 						<IconButton iconClassName="fa fa-save" onClick={this.props.onExportRecipeAsPdf}/>
 					</div>
-				</div>
-				
+				</div>				
 				<div className="recipe-details__content" id="sectionToPrint">
 					<div className="recipe-details__title">
 						<h1>{this.props.recipeDetailsData.title}</h1>
@@ -45,6 +59,16 @@ class RecipeDetails extends Component {
 								</div>
 								<div className="recipe-servings">
 									<i className=""> {this.props.recipeDetailsData.servings}</i>
+								</div>
+								<div className="recipe-stars-number">
+									<ReactStars
+										count={5}
+										size={16}
+										value={this._getFormattedAverageRating()}
+										edit={false}
+										color1={'#CFCFCF'}
+										color2={'black'}
+									/>
 								</div>
 							</div>
 							<div className="recipe-nutrients-wrapper">
@@ -70,7 +94,7 @@ class RecipeDetails extends Component {
 						</div>
 						{this.props.recipeDetailsData.ingredients.map((ingredient, index) => {
 							return (
-								<div className="recipe-details__section-item" key={ingredient.name}>
+								<div className="recipe-details__section-item" key={ingredient.name + index}>
 									<i className="fa fa-caret-right"> 
 										<span className="ingredient-item-amount">{ingredient.amount}</span>
 										<span className="ingredient-item-unit">{ingredient.unit}</span>
@@ -151,6 +175,21 @@ class RecipeDetails extends Component {
 	
 	componentWillReceiveProps(newProps) {
 		this.forceUpdate();
+	}
+
+	_getFormattedAverageRating(){
+		let ratingsSum = 0;
+		
+		this.props.recipeDetailsData.receivedRatings.forEach((rating) => {
+			ratingsSum += rating.score;
+		})
+
+		let averageRating = 0;
+		let totalRatingsNumber = this.props.recipeDetailsData.receivedRatings.length;
+
+		averageRating = parseFloat(ratingsSum) / totalRatingsNumber;
+
+		return averageRating;
 	}
 }
 
