@@ -389,20 +389,49 @@ exports.addRating = function (req, res) {
 		userId: userId
 	}
 
-	Recipe.find({ _id: recipeId, "receivedRatings.userId": userId }, function (err, foundItem) {
-		if (err) {
+	// Recipe.find({ _id: recipeId, "receivedRatings.userId": userId }, function (err, foundItem) {
+	// 	if (err) {
+	// 		res.status(500).send({ message: "There was an error trying to rate this recipe." });
+	// 	} else if (foundItem && foundItem.length === 0) {
+	// 		Recipe.update(searchQuery, { $push: { receivedRatings: rating } }, function (err, recipe) {
+	// 			if (err) {
+	// 				console.log(err);
+	// 				res.status(500).send({ message: "There was an error trying to rate this recipe." });
+	// 			} else {
+	// 				res.status(200).send({ message: `The rating has been added.` })
+	// 			}
+	// 		});
+	// 	} else {
+	// 		res.status(500).send({ message: "You have already rated this recipe." });
+	// 	}
+	// })
+
+	Recipe.find(searchQuery, function(err, recipe){
+		if(err) {
 			res.status(500).send({ message: "There was an error trying to rate this recipe." });
-		} else if (foundItem && foundItem.length === 0) {
-			Recipe.update(searchQuery, { $push: { receivedRatings: rating } }, function (err, recipe) {
+		} else {
+			let ratingHasBeenModified = false;
+			var recipe = recipe[0];
+
+			recipe.receivedRatings.forEach(function(receivedRating, index){
+				if(receivedRating.userId.toString() === rating.userId) {
+					recipe.receivedRatings[index]  = rating;
+					ratingHasBeenModified = true;
+				}
+			});
+
+			if(!ratingHasBeenModified) {
+				recipe.receivedRatings.push(rating);
+			}
+
+			Recipe.findOneAndUpdate(searchQuery, {receivedRatings: recipe.receivedRatings}, {new: true}, function(err, updatedRecipe){
 				if (err) {
 					console.log(err);
 					res.status(500).send({ message: "There was an error trying to rate this recipe." });
 				} else {
-					res.status(200).send({ message: `The rating has been added.` })
+					res.status(200).send(updatedRecipe);
 				}
-			});
-		} else {
-			res.status(500).send({ message: "You have already rated this recipe." });
+			})
 		}
 	})
 };

@@ -59,7 +59,7 @@ let RecipeSchema = mongoose.Schema({
 	
     receivedRatings: [{
 		score: {
-			type: String,
+			type: Number,
 			required: true
 		},
 		createdDate: {
