@@ -25,7 +25,7 @@ class AvatarMenu extends Component {
 				targetOrigin={{ vertical: 'top', horizontal: 'left' }}
 			>
 				<MenuItem primaryText="SearchRecipes" onClick={this.props.onSearchRecipes}/>
-				<MenuItem primaryText="Sign out" />
+				<MenuItem primaryText="Sign out" onClick={this.props.onSignOut}/>
 			</IconMenu>	
 		);
 	}

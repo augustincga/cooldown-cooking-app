@@ -9,15 +9,22 @@ class AvatarMenuContainer extends Component {
 		this.state = {
 			userData: cookies.get('user')
 		}
+		this._onSignOut = this._onSignOut.bind(this);
 	}
 
 	render() {
 		return (
 			<AvatarMenu 
 				avatarName = {this.state.userData.firstName}
-				onSearchRecipes = {this.props.onSearchRecipes}		
+				onSearchRecipes = {this.props.onSearchRecipes}
+				onSignOut = {this._onSignOut}		
 			/>
 		);
+	}
+
+	_onSignOut() {
+		cookies.remove('user');
+		window.location.reload(); 
 	}
 }
 
