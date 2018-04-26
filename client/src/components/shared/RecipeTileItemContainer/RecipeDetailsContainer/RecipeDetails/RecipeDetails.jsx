@@ -5,8 +5,14 @@ import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import ReactStars from 'react-stars';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import './RecipeDetails.css'
+import '../../RecipeTileItemContainer'
+import RecipeTileItemContainer from '../../RecipeTileItemContainer';
+
 
 class RecipeDetails extends Component {
 	constructor(props) {
@@ -15,6 +21,13 @@ class RecipeDetails extends Component {
 			
 		}
 		this._getFormattedAverageRating = this._getFormattedAverageRating.bind(this)
+		this.recommendedRecipesCarouselSettings = {
+			dots: true,
+			infinite: true,
+			speed: 500,
+			slidesToShow: 2,
+			slidesToScroll: 2
+		}
 	}
 
 	render() {
@@ -24,6 +37,7 @@ class RecipeDetails extends Component {
 				open={this.props.isRecipeDetailsModalOpen}
 				onRequestClose={this.props.onRecipeDetailsModalClose}
 				contentClassName='recipe-details__modal-wrapper'
+				key={this.props.recipeDetailsData._id}
 			>
 
 				<div className="recipe-details__rating-wrapper">
@@ -164,8 +178,31 @@ class RecipeDetails extends Component {
 								</div>
 							</form>
 						</div>
+					</div>
 
+					<Divider/>
 
+					<div className="recipe-details__recommended-recipes-wrapper">
+					<div className="recipe-details__section-title">
+						<div>
+							<h1>Here are some recipes you may also like...</h1>
+						</div>
+					</div>
+						<Slider {...this.recommendedRecipesCarouselSettings}>
+							{this.props.similarRecipes.map((recipe, index) => {
+								return (
+									<div>
+										<RecipeTileItemContainer 
+											recipeData={recipe} 
+											key={recipe._id}
+											isSimilarRecipe = {true}
+											onSimilarRecipeClick = {this.props.onSimilarRecipeClick}
+										/>
+
+									</div>
+								)
+							})}
+						</Slider>
 					</div>
 				</div>
 

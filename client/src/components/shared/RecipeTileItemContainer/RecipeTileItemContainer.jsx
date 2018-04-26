@@ -35,7 +35,9 @@ class RecipeTileItemContainer extends Component {
 	}
 
 	_onRecipeTileItemClick() {
-		let recipeId = this.state.recipeData._id
+
+		let recipeId = this.state.recipeData._id;
+
 		fetch(`http://localhost:3001/api/recipe/getRecipe/${recipeId}`, {
 			headers: {
                 'Accept': 'application/json',
@@ -45,10 +47,14 @@ class RecipeTileItemContainer extends Component {
 		}).then((response) => {
 			if(response.status === 200) {
 				response.json().then((recipe) => {
-					this.setState({
-						recipeDetailsData: recipe[0],
-						isRecipeDetailsModalOpen: !this.state.isRecipeDetailsModalOpen
-					})
+					if(this.props.isSimilarRecipe) {
+						this.props.onSimilarRecipeClick(recipe[0]);
+					} else {
+						this.setState({
+							recipeDetailsData: recipe[0],
+							isRecipeDetailsModalOpen: !this.state.isRecipeDetailsModalOpen
+						})
+					}
 				})
 			} else {
 				response.json().then((err) => {

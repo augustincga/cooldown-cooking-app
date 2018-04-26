@@ -11,20 +11,26 @@ class RecipeDetailsContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			recipeDetailsData: this.props.recipeDetailsData
+			recipeDetailsData: this.props.recipeDetailsData,
+			similarRecipes: [],
+			isRecipeDetailsModalOpen: this.props.isRecipeDetailsModalOpen
 		}
 		this._getReviewDetails = this._getReviewDetails.bind(this);
 		this._onAddReview = this._onAddReview.bind(this);
 		this._onExportRecipeAsPdf = this._onExportRecipeAsPdf.bind(this);
 		this._onAddRating = this._onAddRating.bind(this);
 		this._getAddedRatingByUser = this._getAddedRatingByUser.bind(this);
+		this._getSimilarRecipes = this._getSimilarRecipes.bind(this);
+		this._onSimilarRecipeClick = this._onSimilarRecipeClick.bind(this);
 	}
 
 	render() {
 		return (
 			<RecipeDetails 
-				isRecipeDetailsModalOpen = {this.props.isRecipeDetailsModalOpen}
+				isRecipeDetailsModalOpen = {this.state.isRecipeDetailsModalOpen}
 				recipeDetailsData = {this.state.recipeDetailsData}
+				similarRecipes = {this.state.similarRecipes}
+				onSimilarRecipeClick = {this._onSimilarRecipeClick}
 				onRecipeDetailsModalClose = {this.props.onRecipeDetailsModalClose}
 				onAddReview = {this._onAddReview}
 				onExportRecipeAsPdf = {this._onExportRecipeAsPdf}
@@ -33,6 +39,10 @@ class RecipeDetailsContainer extends Component {
 				ref={(recipeDetailsChild) => this.recipeDetailsChild = recipeDetailsChild}
 			/>
 		);
+	}
+
+	componentWillMount() {
+		this._getSimilarRecipes();
 	}
 
 	_getReviewDetails() {
@@ -137,6 +147,44 @@ class RecipeDetailsContainer extends Component {
 				})
 			}
 		}.bind(this))
+	}
+
+	_getSimilarRecipes () {
+		let ingredientsList = {
+			ingredients: []
+		};
+
+		this.state.recipeDetailsData.ingredients.forEach((ingredient) => {
+			ingredientsList.ingredients.push(ingredient.name);
+		});
+
+		fetch('http://localhost:3001/api/recipe/getSimilarRecipes', {
+			headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+			method: 'post',
+			body: JSON.stringify(ingredientsList)
+		}).then(function(response){
+			if(response.status === 200) {
+				response.json().then((recipes) => {
+					recipes.shift()
+					this.setState({
+						similarRecipes: recipes
+					});
+				})
+			} else {
+				response.json().then((error) => {
+					errorNotification(error.message);
+				})
+			}
+		}.bind(this))
+	}
+
+	_onSimilarRecipeClick(recipe) {
+		this.setState({
+			recipeDetailsData: recipe
+		},() => this._getSimilarRecipes())
 	}
 }
 

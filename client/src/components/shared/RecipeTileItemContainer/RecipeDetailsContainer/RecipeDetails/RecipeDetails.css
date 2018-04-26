@@ -4,6 +4,7 @@
 
 .recipe-details__modal-wrapper > div > div {
 	overflow-y: auto !important;
+	overflow-x: hidden !important;
 }
 
 .recipe-details__title h1 {
@@ -151,8 +152,13 @@
 
 .add-review-btn-wrapper {
 	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 .add-review-btn-wrapper .add-review-btn {
 	
+}
+
+.recipe-details__recommended-recipes-wrapper {
+	margin-top: 20px;
 }
