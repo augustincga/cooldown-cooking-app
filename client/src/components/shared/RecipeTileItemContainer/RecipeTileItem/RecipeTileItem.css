@@ -16,7 +16,7 @@
 .recipe-tile__wrapper img {
 	display: block;
 	max-width:300px !important;
-	max-height: auto !important;
+	max-height: 225px !important;
 	width: auto !important;
 	height: auto !important;
 }

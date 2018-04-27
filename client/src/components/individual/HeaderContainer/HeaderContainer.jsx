@@ -13,7 +13,10 @@ class HeaderContainer extends Component {
 	render() {
 		return (
 			<div>
-				<Header onSearchRecipes = {this.props.onSearchRecipes}/>
+				<Header 
+					onSearchRecipes = {this.props.onSearchRecipes}
+					onRecipesCollection = {this.props.onRecipesCollection}
+				/>
 			</div>
 		);
 	}

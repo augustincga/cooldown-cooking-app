@@ -1,0 +1,17 @@
+.recipes-collection__wrapper {
+	margin-top: 100px;
+	text-align: center;
+}
+
+.recipes-collection__wrapper h1 {
+	font-size: 24px;
+	color: rgba(0, 0, 0, 0.6)
+}
+
+.rated-recipes-see-more-btn-wrapper, .reviewed-recipes-see-more-btn-wrapper {
+	margin-bottom: 30px;
+}
+
+.recipes-collection__wrapper .recipe-tile__wrapper {
+	margin-bottom: 0px;
+}
