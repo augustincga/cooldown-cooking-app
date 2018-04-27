@@ -29,9 +29,13 @@ module.exports = function(app){
 
 	//params - userId, userName, recipeId, ratingScore 
 	app.post('/api/recipe/rateRecipe', recipeController.addRating)
+ 
+	app.get('/api/recipe/getRatedRecipesByUser/:userId', recipeController.getRatedRecipesByUser)
 
 	//params - userId, userName, recipeId, review
 	app.post('/api/recipe/reviewRecipe', recipeController.addReview)
+
+	app.get('/api/recipe/getReviewedRecipesByUser/:userId', recipeController.getReviewedRecipesByUser)
 
 	app.get('/api/recipe/getFiltersFromRecipes', recipeController.getFiltersFromRecipes)
 

@@ -346,23 +346,6 @@ exports.addRating = function (req, res) {
 		userId: userId
 	}
 
-	// Recipe.find({ _id: recipeId, "receivedRatings.userId": userId }, function (err, foundItem) {
-	// 	if (err) {
-	// 		res.status(500).send({ message: "There was an error trying to rate this recipe." });
-	// 	} else if (foundItem && foundItem.length === 0) {
-	// 		Recipe.update(searchQuery, { $push: { receivedRatings: rating } }, function (err, recipe) {
-	// 			if (err) {
-	// 				console.log(err);
-	// 				res.status(500).send({ message: "There was an error trying to rate this recipe." });
-	// 			} else {
-	// 				res.status(200).send({ message: `The rating has been added.` })
-	// 			}
-	// 		});
-	// 	} else {
-	// 		res.status(500).send({ message: "You have already rated this recipe." });
-	// 	}
-	// })
-
 	Recipe.find(searchQuery, function(err, recipe){
 		if(err) {
 			res.status(500).send({ message: "There was an error trying to rate this recipe." });
@@ -392,6 +375,26 @@ exports.addRating = function (req, res) {
 		}
 	})
 };
+
+exports.getRatedRecipesByUser = function (req, res) {
+	if (!req.body) {
+		return res.status(400).send({ message: req.body });
+	}
+
+	let userId = req.params.userId;
+
+	let searchQuery = {
+		'receivedRatings.userId' : userId	
+	}
+
+	Recipe.find(searchQuery, function(err, recipes){
+		if(err) {
+			res.status(500).send({message: "There was an error trying to get the rated recipes."});
+		} else {
+			res.status(200).send(recipes);
+		}
+	})
+}
 
 exports.addReview = function (req, res) {
 	if (!req.body) {
@@ -426,6 +429,26 @@ exports.addReview = function (req, res) {
 		}
 	});
 };
+
+exports.getReviewedRecipesByUser = function (req, res) {
+	if (!req.body) {
+		return res.status(400).send({ message: req.body });
+	}
+
+	let userId = req.params.userId;
+
+	let searchQuery = {
+		'receivedReviews.userId' : userId	
+	}
+
+	Recipe.find(searchQuery, function(err, recipes){
+		if(err) {
+			res.status(500).send({message: "There was an error trying to get the reviewed recipes."});
+		} else {
+			res.status(200).send(recipes);
+		}
+	})
+}
 
 exports.getFiltersFromRecipes = function (req, res) {
 	Recipe.distinct('categories', function (err, filters) {
