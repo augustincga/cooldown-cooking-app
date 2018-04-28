@@ -8,7 +8,7 @@
 	color: rgba(0, 0, 0, 0.6)
 }
 
-.rated-recipes-see-more-btn-wrapper, .reviewed-recipes-see-more-btn-wrapper {
+.rated-recipes-see-more-btn-wrapper, .reviewed-recipes-see-more-btn-wrapper, .bookmarked-recipes-see-more-btn-wrapper {
 	margin-bottom: 30px;
 }
 

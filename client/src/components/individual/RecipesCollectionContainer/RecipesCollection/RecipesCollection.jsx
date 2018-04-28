@@ -17,17 +17,20 @@ class RecipesCollection extends Component {
 	render() {
 		return (
 			<div className="recipes-collection__wrapper">
-				{/* <div className="recipes-collection__bookmarked-recipes-wrapper">
+				<div className="recipes-collection__bookmarked-recipes-wrapper">
 					<div>
 						<h1>
 							Here are the recipes you saved for later...
 						</h1>
 						<div className="bookmarked-recipes-container">
-							
+							<RecipesCollectionList recipesList = {this.props.savedForLaterRecipes} key = {"saved-for-later-recipes"}/>
+						</div>
+						<div className="bookmarked-recipes-see-more-btn-wrapper">
+							<RaisedButton className="bookmarked-recipes-see-more-btn" label="See more" primary={true}/>
 						</div>
 					</div>
 				</div>
-				<Divider/> */}
+				<Divider/>
 				<div className="recipes-collection__reviewed-recipes-wrapper">
 					<div>
 						<h1>
