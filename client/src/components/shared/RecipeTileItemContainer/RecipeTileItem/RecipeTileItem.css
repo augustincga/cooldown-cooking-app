@@ -24,3 +24,24 @@
 .recipe-tile__image-wrapper {
 	cursor: pointer;
 }
+
+.recipe-tile__wrapper .recipe-tile__btn-wrapper {
+	position: absolute !important;
+	z-index: 1 !important;
+	top: 0 !important;
+	min-width: 32px !important;
+	max-width: 32px !important;
+	width: 64px !important;
+	height: auto !important;
+	right: 5px !important;
+	padding: 5px !important;
+}
+
+.recipe-tile__wrapper .recipe-tile__btn-wrapper svg {
+	width: 28px !important;
+	height: 28px !important;
+	fill:white;
+	border-radius: 30px;
+	background-color: #4F6E6D;
+	opacity: 0.8;
+}
