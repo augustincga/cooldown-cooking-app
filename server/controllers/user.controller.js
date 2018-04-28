@@ -66,7 +66,7 @@ exports.getSavedForLaterRecipes = function(req, res) {
         return res.status(400).send({message: req.body});
 	}
 
-	let userId = req.body.userId
+	let userId = req.params.userId
 
 	User.find({ _id: userId }, 'savedForLaterRecipes', function(err, list){
         if(err) {
