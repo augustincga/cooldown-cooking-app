@@ -51,12 +51,12 @@ exports.saveRecipeForLater = function(req, res) {
 	let recipe = {recipeId: req.body.recipeId}
 	let userId = req.body.userId
 
-	User.update({ _id: userId }, { $push: { savedForLaterRecipes: recipe } }, function(err, recipe){
+	User.findOneAndUpdate({ _id: userId }, { $push: { savedForLaterRecipes: recipe } }, {new: true}, function(err, user){
         if(err) {
             console.log(err);
             res.status(500).send({message: "There was an error trying to add the recipe to saved for later list."});
         } else {
-			res.status(200).send({message: "The recipe was added to saved for later list."})
+			res.status(200).send(user);
 		}
 	});
 };
