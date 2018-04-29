@@ -61,6 +61,24 @@ exports.saveRecipeForLater = function(req, res) {
 	});
 };
 
+exports.removeSavedForLaterRecipe = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let recipe = {recipeId: req.body.recipeId}
+	let userId = req.body.userId
+
+	User.findOneAndUpdate({ _id: userId }, { $pull: { savedForLaterRecipes: recipe } }, {new: true}, function(err, user){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to remove the recipe from saved for later list."});
+        } else {
+			res.status(200).send(user);
+		}
+	});
+};
+
 exports.getSavedForLaterRecipes = function(req, res) {
     if(!req.body) {
         return res.status(400).send({message: req.body});
