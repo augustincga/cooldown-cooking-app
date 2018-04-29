@@ -9,12 +9,15 @@ class RecipesCollectionContainer extends Component {
 		this.state = {
 			savedForLaterRecipes: [],
 			ratedRecipes: [],
-			reviewedRecipes: []
+			ratedRecipesKey: 'rated-recipes-list',
+			reviewedRecipes: [],
+			reviewedRecipesKey: 'reviewd-recipes-list'
 		}
 		this.user = cookies.get('user');
 		this._getRatedRecipesByUser = this._getRatedRecipesByUser.bind(this);
 		this._getReviewedRecipesByUser = this._getReviewedRecipesByUser.bind(this);
 		this._getSavedForLaterRecipes = this._getSavedForLaterRecipes.bind(this);
+		this._triggeredByBookmarkChange = this._triggeredByBookmarkChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -28,7 +31,10 @@ class RecipesCollectionContainer extends Component {
 			<RecipesCollection
 				savedForLaterRecipes = {this.state.savedForLaterRecipes}
 				ratedRecipesList = {this.state.ratedRecipes}
+				ratedRecipesListKey = {this.state.ratedRecipesKey}
 				reviewedRecipesList = {this.state.reviewedRecipes}
+				reviewedRecipesListKey = {this.state.reviewedRecipesKey}
+				triggeredByBookmarkChange = {this._triggeredByBookmarkChange}
 			/>
 		);
 	}
@@ -103,6 +109,31 @@ class RecipesCollectionContainer extends Component {
 				});
 			}
         }.bind(this))
+	}
+
+	_triggeredByBookmarkChange(action, recipe) {
+		let bookmarks = cookies.get('user').savedForLaterRecipes;
+
+		let synchronizedBookmarksList = [];
+
+		if(action === 'onRemoveAction') {
+			bookmarks.forEach((bookmark) => {
+				this.state.savedForLaterRecipes.forEach((recipe) => {
+					if(bookmark.recipeId === recipe._id) {
+						synchronizedBookmarksList.push(recipe);
+					}
+				})
+			})
+		} else if(action === 'onAddAction') {
+			synchronizedBookmarksList = [...this.state.savedForLaterRecipes];
+			synchronizedBookmarksList.push(recipe);
+		}
+
+		this.setState({
+			savedForLaterRecipes: synchronizedBookmarksList,
+			ratedRecipesKey: this.state.ratedRecipesKey + Math.random(),
+			reviewedRecipesKey: this.state.reviewedRecipesKey + Math.random()
+		})
 	}
 }
 

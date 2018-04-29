@@ -17,6 +17,7 @@ class RecipeTileItemContainer extends Component {
 		this._onRecipeDetailsModalClose = this._onRecipeDetailsModalClose.bind(this);
 		this._onSaveForLaterClick = this._onSaveForLaterClick.bind(this);
 		this._isRecipeBookmarked = this._isRecipeBookmarked.bind(this);
+		this._onRemoveFromBookmarks = this._onRemoveFromBookmarks.bind(this);
 	}
 
 	componentWillMount() {
@@ -32,6 +33,7 @@ class RecipeTileItemContainer extends Component {
 					recipeData={this.state.recipeData}
 					onRecipeTileItemClick={this._onRecipeTileItemClick}
 					onSaveForLaterClick = {this._onSaveForLaterClick}
+					onRemoveFromBookmarks = {this._onRemoveFromBookmarks}
 					isRecipeBookmarked = {this.state.isRecipeBookmarked}
 				/>
 				{this.state.isRecipeDetailsModalOpen ?
@@ -103,6 +105,9 @@ class RecipeTileItemContainer extends Component {
 					successNotification('The recipe has been bookmarked.');
 					cookies.set('user', user);
 					this.setState({isRecipeBookmarked: true});
+					if(this.props.triggeredByBookmarkChange) {
+						this.props.triggeredByBookmarkChange('onAddAction', this.state.recipeData);
+					}
 				})
 			} else {
 				response.json().then((err) => {
@@ -123,6 +128,40 @@ class RecipeTileItemContainer extends Component {
 		});
 
 		return isBookmarked;
+	}
+
+	_onRemoveFromBookmarks(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		let data = {
+			userId: cookies.get('user')._id,
+			recipeId: this.state.recipeData._id
+		}
+
+		fetch('http://localhost:3001/api/user/removeSavedForLaterRecipe', {
+			headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+			method: 'post',
+			body: JSON.stringify(data)
+		}).then((response) => {
+			if(response.status === 200) {
+				response.json().then((user) => {
+					successNotification('The recipe has been removed.');
+					cookies.set('user', user);
+					this.setState({isRecipeBookmarked: false});
+					if(this.props.triggeredByBookmarkChange) {
+						this.props.triggeredByBookmarkChange('onRemoveAction');
+					}
+				})
+			} else {
+				response.json().then((err) => {
+					errorNotification(err);
+				})
+			}
+		});
 	}
 
 }

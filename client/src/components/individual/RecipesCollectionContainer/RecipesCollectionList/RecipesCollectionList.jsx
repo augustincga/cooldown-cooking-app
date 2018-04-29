@@ -16,7 +16,11 @@ class RecipesCollectionList extends Component {
 			<div className="recipes-collection-list__wrapper">
 				{this.props.recipesList.slice(0, 3).map((recipe)=> {
 					return(
-						<RecipeTileItemContainer recipeData = {recipe} key = {recipe._id}/>					
+						<RecipeTileItemContainer 
+							recipeData = {recipe} 
+							key = {recipe._id}
+							triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
+						/>					
 					)
 				})}
 			</div>

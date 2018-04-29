@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import Beenhere from 'material-ui/svg-icons/maps/beenhere'
 
 import './RecipeTileItem.css'
 
@@ -28,10 +29,12 @@ class RecipeTileItem extends Component {
 							<img src={this.props.recipeData.largeImage} alt="" />
 							{
 								this.props.isRecipeBookmarked === false ?
-									<IconButton className="recipe-tile__btn-wrapper" onClick={this.props.onSaveForLaterClick}>
+									<IconButton className="recipe-tile__bookmark-btn-wrapper" onClick={this.props.onSaveForLaterClick}>
 										<StarBorder color="white" />
+									</IconButton> :
+									<IconButton className="recipe-tile__already-bookmark-btn-wrapper" onClick={this.props.onRemoveFromBookmarks}>
+										<Beenhere/>
 									</IconButton>
-									: null
 							}
 						</div>
 					</CardMedia>

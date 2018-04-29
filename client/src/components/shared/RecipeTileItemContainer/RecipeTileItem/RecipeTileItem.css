@@ -25,7 +25,7 @@
 	cursor: pointer;
 }
 
-.recipe-tile__wrapper .recipe-tile__btn-wrapper {
+.recipe-tile__wrapper .recipe-tile__bookmark-btn-wrapper, .recipe-tile__wrapper .recipe-tile__already-bookmark-btn-wrapper {
 	position: absolute !important;
 	z-index: 1 !important;
 	top: 0 !important;
@@ -37,11 +37,19 @@
 	padding: 5px !important;
 }
 
-.recipe-tile__wrapper .recipe-tile__btn-wrapper svg {
+.recipe-tile__wrapper .recipe-tile__bookmark-btn-wrapper svg {
 	width: 28px !important;
 	height: 28px !important;
-	fill:white;
+	fill: #54D5CF !important;
 	border-radius: 30px;
-	background-color: #4F6E6D;
+	background-color: #1D1C27;
+	opacity: 0.8;
+}
+
+.recipe-tile__wrapper .recipe-tile__already-bookmark-btn-wrapper svg {
+	width: 28px !important;
+	height: 28px !important;
+	fill: white !important;
+	background-color: transparent !important;
 	opacity: 0.8;
 }

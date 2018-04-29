@@ -23,7 +23,11 @@ class RecipesCollection extends Component {
 							Here are the recipes you saved for later...
 						</h1>
 						<div className="bookmarked-recipes-container">
-							<RecipesCollectionList recipesList = {this.props.savedForLaterRecipes} key = {"saved-for-later-recipes"}/>
+							<RecipesCollectionList 
+								recipesList = {this.props.savedForLaterRecipes} 
+								key = {"saved-for-later-recipes"}
+								triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}	
+							/>
 						</div>
 						<div className="bookmarked-recipes-see-more-btn-wrapper">
 							<RaisedButton className="bookmarked-recipes-see-more-btn" label="See more" primary={true}/>
@@ -37,7 +41,11 @@ class RecipesCollection extends Component {
 							See your reviewed recipes...
 						</h1>
 						<div className="reviewed-recipes-container">
-							<RecipesCollectionList recipesList = {this.props.reviewedRecipesList} key = {"reviewed-recipes"}/>
+							<RecipesCollectionList 
+								recipesList = {this.props.reviewedRecipesList} 
+								key = {this.props.reviewedRecipesListKey}
+								triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
+							/>
 						</div>
 						<div className="reviewed-recipes-see-more-btn-wrapper">
 							<RaisedButton className="reviewed-recipes-see-more-btn" label="See more" primary={true}/>
@@ -51,7 +59,11 @@ class RecipesCollection extends Component {
 							See your rated recipes...
 						</h1>
 						<div className="rated-recipes-container">
-							<RecipesCollectionList recipesList = {this.props.ratedRecipesList} key = {"rated-recipes"}/>
+							<RecipesCollectionList 
+							recipesList = {this.props.ratedRecipesList} 
+							key = {this.props.ratedRecipesListKey}
+							triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
+							/>
 						</div>
 						<div className="rated-recipes-see-more-btn-wrapper">
 							<RaisedButton className="rated-recipes-see-more-btn" label="See more" primary={true}/>
