@@ -16,6 +16,7 @@ class HeaderContainer extends Component {
 				<Header 
 					onSearchRecipes = {this.props.onSearchRecipes}
 					onRecipesCollection = {this.props.onRecipesCollection}
+					onGoogleSearchRecipe = {this.props.onGoogleSearchRecipe}
 				/>
 			</div>
 		);

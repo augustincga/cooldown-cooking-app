@@ -26,6 +26,7 @@ class AvatarMenu extends Component {
 			>
 				<MenuItem primaryText="Search Recipes" onClick={this.props.onSearchRecipes}/>
 				<MenuItem primaryText="Recipes Collection" onClick={this.props.onRecipesCollection}/>
+				<MenuItem primaryText="Google Search Recipe" onClick={this.props.onGoogleSearchRecipe}/>
 				<MenuItem primaryText="Account"/>
 				<MenuItem primaryText="Sign Out" onClick={this.props.onSignOut}/>
 			</IconMenu>	

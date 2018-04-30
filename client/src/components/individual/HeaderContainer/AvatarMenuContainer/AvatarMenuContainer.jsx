@@ -18,6 +18,7 @@ class AvatarMenuContainer extends Component {
 				avatarName = {this.state.userData.firstName}
 				onSearchRecipes = {this.props.onSearchRecipes}
 				onRecipesCollection = {this.props.onRecipesCollection}
+				onGoogleSearchRecipe ={this.props.onGoogleSearchRecipe}
 				onSignOut = {this._onSignOut}		
 			/>
 		);

@@ -19,6 +19,7 @@ class Header extends Component {
 					iconElementLeft={<AvatarMenuContainer 
 										onSearchRecipes= {this.props.onSearchRecipes}
 										onRecipesCollection = {this.props.onRecipesCollection}
+										onGoogleSearchRecipe = {this.props.onGoogleSearchRecipe}
 										/>
 									}
 					className="header__app-bar"

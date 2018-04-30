@@ -28,3 +28,9 @@ export const warningNotification = (message) => {
 		timeout: 3000
 	});
 }
+
+
+//Settings for cloudinary in order to upload an image on cloud before searchign it on google
+export const CLOUDINARY_UPLOAD_PRESET = 'vtxr37dm'
+
+export const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/augustincga/upload'
