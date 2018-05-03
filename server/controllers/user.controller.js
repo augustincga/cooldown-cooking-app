@@ -106,3 +106,27 @@ exports.getSavedForLaterRecipes = function(req, res) {
 		}
 	});
 }
+
+exports.saveGoogleSearch = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let dataObject = {
+		uploadedImgUrl: req.body.uploadedImgUrl,
+        urlResult: req.body.urlResult,
+	}
+
+	let searchQuery = {
+		_id: req.body.userId
+	}
+
+	User.findOneAndUpdate(searchQuery, { $push: { googleSearchedRecipes: dataObject } }, {new: true}, function(err, user){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to get the saved for later recipes list."});
+        } else {
+			res.status(200).send(user);
+		}
+	});
+}

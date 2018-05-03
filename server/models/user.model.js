@@ -82,13 +82,13 @@ let UserSchema = mongoose.Schema({
         } 
     }],
     googleSearchedRecipes: [{
-        date: Date,
-        uploadedImg: String,
+        date: {
+			type: Date,
+			default: Date.now
+		},
+        uploadedImgUrl: String,
         urlResult: String,
     }],
-    // dashboard: [{
-
-    // }]
 });
 
 module.exports = mongoose.model('User', UserSchema);
