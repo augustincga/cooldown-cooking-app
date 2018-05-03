@@ -5,7 +5,7 @@
 
 .recipes-collection__wrapper h1 {
 	font-size: 24px;
-	color: rgba(0, 0, 0, 0.6)
+	color: rgba(0, 0, 0, 0.6);
 }
 
 .rated-recipes-see-more-btn-wrapper, .reviewed-recipes-see-more-btn-wrapper, .bookmarked-recipes-see-more-btn-wrapper {

@@ -1,3 +1,26 @@
 .google-search-recipes__wrapper {
 	margin-top: 100px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.google-search-recipes__dropzone {
+	display: flex;
+	justify-content: center;
+}
+
+.google-search-recipes__list-container {
+	margin-top: 20px;
+
+}
+
+.google-search-recipes__list-container h1 {
+	font-size: 24px;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.google-search-recipes__list-item img{
+	width: 250px;
+	height: auto;
 }
