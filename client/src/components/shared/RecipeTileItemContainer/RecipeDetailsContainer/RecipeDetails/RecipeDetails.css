@@ -13,6 +13,7 @@
 
 .recipe-details__header-buttons {
 	float: right;
+	display: flex;
 }
 
 .recipe-details__rating-wrapper {
@@ -20,8 +21,25 @@
 	margin-top: 6px;
 }
 
-.header-buttons__export-pdf .fa-save{
+.header-buttons__export-pdf .fa-save, .header-buttons__send-by-email .fa-envelope {
 	color: rgb(0, 188, 212) !important;
+}
+
+.email-popover__wrapper {
+	display: flex;
+    flex-direction: column;
+	align-items: center;
+	width: 200px;
+}
+
+.email-popover__email-input > div{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 160px !important;
+}
+
+.email-popover__send-email-btn {
+	margin-bottom: 10px;
 }
 
 .recipe-details__header-wrapper {
@@ -153,10 +171,6 @@
 .add-review-btn-wrapper {
 	margin-top: 15px;
 	margin-bottom: 15px;
-}
-
-.add-review-btn-wrapper .add-review-btn {
-	
 }
 
 .recipe-details__recommended-recipes-wrapper {

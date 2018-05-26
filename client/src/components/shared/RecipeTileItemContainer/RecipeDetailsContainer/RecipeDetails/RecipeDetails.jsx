@@ -3,7 +3,9 @@ import Dialog from 'material-ui/Dialog'
 import Divider from 'material-ui/Divider'
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
+import Popover from 'material-ui/Popover';
 import ReactStars from 'react-stars';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -56,6 +58,31 @@ class RecipeDetails extends Component {
 					<div className="header-buttons__export-pdf">
 						<IconButton iconClassName="fa fa-save" onClick={this.props.onExportRecipeAsPdf}/>
 					</div>
+					<div className="header-buttons__send-by-email">
+						<IconButton iconClassName="fa fa-envelope" onClick={this.props.onEmailPopover}/>
+					</div>
+
+					<Popover
+					    anchorEl={this.props.emailPopoverAnchor}
+						open={this.props.isEmailPopoverOpen}
+						anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+						targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+						onRequestClose={this.props.onEmailPopover}
+					>
+						<div className="email-popover__wrapper">
+							<div className="email-popover__email-input">
+								<TextField
+									hintText="Receiver e-mail..."
+									ref={(emailAddressInput) => this.emailAddressInput = emailAddressInput}
+								/>
+							</div>
+							<div className="email-popover__send-email-btn">
+								<RaisedButton label="Send Recipe" primary={true} onClick={this.props.onSendByEmail}/>
+							</div>
+						</div>
+
+					</Popover>
+
 				</div>				
 				<div className="recipe-details__content" id="sectionToPrint">
 					<div className="recipe-details__title">

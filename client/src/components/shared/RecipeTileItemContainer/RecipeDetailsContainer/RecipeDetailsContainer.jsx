@@ -13,7 +13,9 @@ class RecipeDetailsContainer extends Component {
 		this.state = {
 			recipeDetailsData: this.props.recipeDetailsData,
 			similarRecipes: [],
-			isRecipeDetailsModalOpen: this.props.isRecipeDetailsModalOpen
+			isRecipeDetailsModalOpen: this.props.isRecipeDetailsModalOpen,
+			isEmailPopoverOpen: false,
+			emailPopoverAnchor: null
 		}
 		this._getReviewDetails = this._getReviewDetails.bind(this);
 		this._onAddReview = this._onAddReview.bind(this);
@@ -22,6 +24,8 @@ class RecipeDetailsContainer extends Component {
 		this._getAddedRatingByUser = this._getAddedRatingByUser.bind(this);
 		this._getSimilarRecipes = this._getSimilarRecipes.bind(this);
 		this._onSimilarRecipeClick = this._onSimilarRecipeClick.bind(this);
+		this._onSendByEmail = this._onSendByEmail.bind(this);
+		this._onEmailPopover = this._onEmailPopover.bind(this);
 	}
 
 	render() {
@@ -36,6 +40,10 @@ class RecipeDetailsContainer extends Component {
 				onExportRecipeAsPdf = {this._onExportRecipeAsPdf}
 				onAddRating = {this._onAddRating}
 				addedUserRating = {this._getAddedRatingByUser()}
+				isEmailPopoverOpen = {this.state.isEmailPopoverOpen}
+				onEmailPopover = {this._onEmailPopover}
+				emailPopoverAnchor = {this.state.emailPopoverAnchor}
+				onSendByEmail = {this._onSendByEmail}
 				ref={(recipeDetailsChild) => this.recipeDetailsChild = recipeDetailsChild}
 			/>
 		);
@@ -185,6 +193,24 @@ class RecipeDetailsContainer extends Component {
 		this.setState({
 			recipeDetailsData: recipe
 		},() => this._getSimilarRecipes())
+	}
+
+	_onSendByEmail() {
+		console.log(this.recipeDetailsChild.emailAddressInput.getValue());
+
+		const sectionToPrint = document.getElementById('sectionToPrint');
+
+		html2canvas(sectionToPrint)
+			.then((canvas) => {
+				console.log(canvas);
+			});
+	}
+
+	_onEmailPopover(event) {
+		this.setState({
+			isEmailPopoverOpen: !this.state.isEmailPopoverOpen,
+			emailPopoverAnchor: event.currentTarget,
+		})
 	}
 }
 
