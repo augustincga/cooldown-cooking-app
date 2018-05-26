@@ -32,8 +32,8 @@ class GoogleSearchRecipe extends Component {
 						<h1>Here are your latest google searches...</h1>
 					</div>
 
-					<div>
-						{this.props.googleSearchedRecipes.map((search) => {
+					<div className="google-search-recipes__items-wrapper">
+						{this.props.googleSearchedRecipes.slice(this.props.googleSearchedRecipes.length - 5, this.props.googleSearchedRecipes.length).map((search) => {
 							return(
 								<div className="google-search-recipes__list-item" key={search.urlResult}>
 									<a href={search.urlResult} target="_blank"><img src={search.uploadedImgUrl}/></a>
