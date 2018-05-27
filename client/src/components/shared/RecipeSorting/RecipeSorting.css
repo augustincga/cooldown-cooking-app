@@ -1,0 +1,13 @@
+.recipe-sorting__wrapper {
+	display: flex;
+	margin-top: 70px;
+	margin-left: 245px;
+}
+
+.recipe-sorting__sort-label {
+	margin-top: 12px;
+}
+
+.recipe-sorting__sort-btn button {
+	padding-left: 17px !important;
+}

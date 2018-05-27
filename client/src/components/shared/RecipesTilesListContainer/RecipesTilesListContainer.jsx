@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import RecipeTilesList from './RecipesTilesList/RecipesTilesList';
+import RecipeSorting from '../RecipeSorting/RecipeSorting'
 
 const numberOfPassedRecipes = 9;
 
@@ -14,16 +15,22 @@ class RecipesTilesListContainer extends Component {
 			isDataLeftToRender: true,
 		}
 		this._onScrollEnd = this._onScrollEnd.bind(this);
+		this._triggerSortedRecipes = this._triggerSortedRecipes.bind(this);
 	}
 
 	render() {
 		return (
 			<div>
+				{this.state.recipesList.length > 0 ? 
+				<RecipeSorting 
+					recipesList = {this.state.recipesList}
+					triggerSortedRecipes = {this._triggerSortedRecipes}
+				/> : null}
 				<RecipeTilesList 
 					recipesList={this.state.passedRecipes}
 					onScrollEnd={this._onScrollEnd}
 					hasMore={this.state.isDataLeftToRender}
-			/>
+				/>
 			</div>
 		);
 	}
@@ -45,6 +52,17 @@ class RecipesTilesListContainer extends Component {
 			passedRecipes: this.state.passedRecipes.concat(passedRecipes),
 			isDataLeftToRender: isDataLeftInArray
 		})
+	}
+
+	_triggerSortedRecipes(recipesList) {
+		this.setState({
+			recipesList: recipesList,
+			passedRecipes: [],
+			lastPassedRecipeIndex: 0,
+			isDataLeftToRender: true
+		}, () => {
+			this._onScrollEnd();
+		});
 	}
 
 	componentWillReceiveProps(newProps) {
