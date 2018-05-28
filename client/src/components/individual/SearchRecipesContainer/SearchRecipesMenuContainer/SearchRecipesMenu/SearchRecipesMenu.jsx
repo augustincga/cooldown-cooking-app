@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Drawer from 'material-ui/Drawer';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
@@ -25,11 +24,6 @@ class SearchRecipesMenu extends Component {
 	render() {
 		return (
 			<div className="search-recipes-menu__wrapper">
-				<Drawer
-					width={200}
-					containerClassName = "sidebar__wrapper"
-					open={true}
-				>
 					<DropDownMenu 
 						maxHeight={150} 
 						value = {"default"}
@@ -73,7 +67,6 @@ class SearchRecipesMenu extends Component {
 							/>
 							)}
 						</div>
-				</Drawer>
 			</div>
 		);
 	}

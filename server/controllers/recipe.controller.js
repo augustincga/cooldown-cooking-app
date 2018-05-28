@@ -257,7 +257,7 @@ exports.getRecipesByName = function (req, res) {
 		"title": { $regex: new RegExp(`.*${recipesName}.*`, 'i') }
 	};
 
-	Recipe.find(searchQuery, function (err, recipes) {
+	Recipe.find(searchQuery).limit(50).exec(function (err, recipes) {
 		if (err) {
 			res.status(500).send({ message: "Some error occurred while searching for the Recipes." })
 		} else if (recipes && recipes.length > 0) {
@@ -265,7 +265,7 @@ exports.getRecipesByName = function (req, res) {
 		} else {
 			res.status(404).send({ message: "Could not find recipes by required name." });
 		}
-	})
+	});
 };
 
 exports.getRecipesByAuthorId = function (req, res) {

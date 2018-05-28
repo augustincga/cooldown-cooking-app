@@ -1,0 +1,15 @@
+.recipe-search-bar__wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.recipe-search-bar__search-btn {
+	margin-top: 30px;
+	display: flex;
+}
+
+.recipe-search-bar__text-field > div {
+	margin-top: 30px;
+	width: 180px !important;
+}

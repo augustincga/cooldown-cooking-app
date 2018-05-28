@@ -22,10 +22,11 @@ class RecipesTilesListContainer extends Component {
 		return (
 			<div>
 				{this.state.recipesList.length > 0 ? 
-				<RecipeSorting 
-					recipesList = {this.state.recipesList}
-					triggerSortedRecipes = {this._triggerSortedRecipes}
-				/> : null}
+					<RecipeSorting
+						recipesList={this.state.recipesList}
+						triggerSortedRecipes={this._triggerSortedRecipes}
+					/>
+					: null}
 				<RecipeTilesList 
 					recipesList={this.state.passedRecipes}
 					onScrollEnd={this._onScrollEnd}
