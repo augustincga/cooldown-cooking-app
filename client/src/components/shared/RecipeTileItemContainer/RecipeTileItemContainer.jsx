@@ -11,19 +11,27 @@ class RecipeTileItemContainer extends Component {
 			recipeData: this.props.recipeData,
 			isRecipeDetailsModalOpen: false,
 			recipeDetailsData: null,
-			isRecipeBookmarked: false
+			isRecipeBookmarked: false,
+			availability: {
+				available: null,
+				missing: null
+			}
 		}
 		this._onRecipeTileItemClick = this._onRecipeTileItemClick.bind(this);
 		this._onRecipeDetailsModalClose = this._onRecipeDetailsModalClose.bind(this);
 		this._onSaveForLaterClick = this._onSaveForLaterClick.bind(this);
 		this._isRecipeBookmarked = this._isRecipeBookmarked.bind(this);
 		this._onRemoveFromBookmarks = this._onRemoveFromBookmarks.bind(this);
+		this._getIngredientsAvailability = this._getIngredientsAvailability.bind(this);
 	}
 
 	componentWillMount() {
 		this.setState({
 			isRecipeBookmarked: this._isRecipeBookmarked()
 		})
+		if(this.props.hasOwnProperty('selectedIngredients') && this.props.selectedIngredients.length > 0) {
+			this._getIngredientsAvailability();
+		}
 	}
 
 	render() {
@@ -35,6 +43,7 @@ class RecipeTileItemContainer extends Component {
 					onSaveForLaterClick = {this._onSaveForLaterClick}
 					onRemoveFromBookmarks = {this._onRemoveFromBookmarks}
 					isRecipeBookmarked = {this.state.isRecipeBookmarked}
+					availability = {this.state.availability}
 				/>
 				{this.state.isRecipeDetailsModalOpen ?
 					<RecipeDetailsContainer
@@ -162,6 +171,34 @@ class RecipeTileItemContainer extends Component {
 				})
 			}
 		});
+	}
+
+	_getIngredientsAvailability() {
+		let selectedIngredientsAsFilters = this.props.selectedIngredients;
+
+		let recipeIngredients = [];
+
+		this.state.recipeData.ingredients.map((ingredient) => {
+			recipeIngredients.push(ingredient.name);
+		})
+
+		let identicalIngredients = selectedIngredientsAsFilters.filter((ingredient)  => recipeIngredients.indexOf(ingredient) !== -1 );
+		
+		if(identicalIngredients.length  === recipeIngredients.length) {
+			this.setState({
+				availability: {
+					available: 'All',
+					missing: 0
+				}
+			})
+		} else {
+			this.setState({
+				availability: {
+					available: identicalIngredients.length,
+					missing: recipeIngredients.length - identicalIngredients.length
+				}
+			})
+		}
 	}
 
 }

@@ -10,6 +10,7 @@ class SearchRecipesContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			selectedIngredients: [],
 			recipesDataSet: [],
 			toggleSearchTypeValue: "filters"
 		}
@@ -44,13 +45,19 @@ class SearchRecipesContainer extends Component {
 					}
 					
 				</Drawer>
-				<RecipesTilesListContainer recipesList = {this.state.recipesDataSet}/>
+				<RecipesTilesListContainer 
+					recipesList = {this.state.recipesDataSet}
+					selectedIngredients = {this.state.selectedIngredients}
+				/>
 			</div>
 		);
 	}
 	
-	_onFetchRecipesByFilters(recipes) {
-		this.setState({recipesDataSet: recipes});
+	_onFetchRecipesByFilters(recipes, filters) {
+		this.setState({
+			recipesDataSet: recipes,
+			selectedIngredients: filters.ingredients
+		});
 	}
 
 	_onTabChangeSearchType(value) {
@@ -59,7 +66,8 @@ class SearchRecipesContainer extends Component {
 
 	_onSuccessfullyReceiveRecipesFromSearchBar(recipes) {
 		this.setState({
-			recipesDataSet: recipes
+			recipesDataSet: recipes,
+			selectedIngredients: []
 		})
 	}
 }

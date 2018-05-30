@@ -38,7 +38,19 @@ class RecipeTileItem extends Component {
 							}
 						</div>
 					</CardMedia>
-					<CardText>
+					<CardText className="recipe-tile__card-text">
+						{this.props.availability.available !== null ?
+							<div> 
+								<div className="recipe-tile__available-ingredients">
+									<span>{this.props.availability.available} ingredient(s) available </span>
+								</div>
+								<div className="recipe-tile__missing-ingredients">
+									<span>{this.props.availability.missing !== 0 ? `${this.props.availability.missing} ingredient(s) missing` : null}</span>
+								</div>
+							</div>
+							: null
+						}
+
 					</CardText>
 				</Card>
 			</div>

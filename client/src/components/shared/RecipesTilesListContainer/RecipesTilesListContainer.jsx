@@ -10,6 +10,7 @@ class RecipesTilesListContainer extends Component {
 		super(props);
 		this.state = {
 			recipesList: props.recipesList,
+			selectedIngredients: props.selectedIngredients,
 			passedRecipes: [],
 			lastPassedRecipeIndex: 0,
 			isDataLeftToRender: true,
@@ -29,6 +30,7 @@ class RecipesTilesListContainer extends Component {
 					: null}
 				<RecipeTilesList 
 					recipesList={this.state.passedRecipes}
+					selectedIngredients = {this.state.selectedIngredients}
 					onScrollEnd={this._onScrollEnd}
 					hasMore={this.state.isDataLeftToRender}
 				/>
@@ -70,6 +72,7 @@ class RecipesTilesListContainer extends Component {
 		if (this.state.recipesList !== newProps.recipesList) {
 			this.setState({
 				recipesList: newProps.recipesList,
+				selectedIngredients: newProps.selectedIngredients,
 				passedRecipes: [],
 				lastPassedRecipeIndex: 0,
 				isDataLeftToRender: true

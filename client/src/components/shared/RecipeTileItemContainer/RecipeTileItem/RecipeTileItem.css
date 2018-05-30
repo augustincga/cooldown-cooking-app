@@ -53,3 +53,17 @@
 	background-color: transparent !important;
 	opacity: 0.8;
 }
+
+.recipe-tile__card-text {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	font-weight: bold;
+}
+.recipe-tile__available-ingredients {
+	color: #105303;
+}
+
+.recipe-tile__missing-ingredients {
+	color:#B42929;
+}

@@ -14,13 +14,9 @@ class RecipeTilesList extends Component {
 	}
 
 	render() {
-		// const loader = <div className="loader">Loading ...</div>;
 
 		return (
 			<div className="recipe-tiles-list__wrapper">
-				{/* {this.props.recipesList.map(recipe => (
-					<RecipeTileItemContainer recipeData = {recipe} key = {recipe._id}/>
-				))} */}
 
 				<InfiniteScroll
 					pageStart={0}
@@ -28,7 +24,7 @@ class RecipeTilesList extends Component {
 					hasMore={this.props.hasMore}
 				>
 				{this.props.recipesList.map(recipe => (
-					<RecipeTileItemContainer recipeData = {recipe} key = {recipe._id}/>
+					<RecipeTileItemContainer recipeData = {recipe} key = {recipe._id} selectedIngredients={this.props.selectedIngredients}/>
 				))}
 				</InfiniteScroll>
 			</div>
