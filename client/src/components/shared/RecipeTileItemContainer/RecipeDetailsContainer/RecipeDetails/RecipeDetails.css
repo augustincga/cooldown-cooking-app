@@ -52,6 +52,14 @@
 	margin-bottom: 20px;
 }
 
+.add-as-cooked__already-cooked-btn-container {
+	display: flex;
+}
+
+.add-as-cooked__already-cooked-btn-container .add-as-cooked__add-as-cooked-btn {
+	margin-right: 5px;
+}
+
 .add-as-cooked__wrapper, .email-popover__wrapper {
 	display: flex;
     flex-direction: column;

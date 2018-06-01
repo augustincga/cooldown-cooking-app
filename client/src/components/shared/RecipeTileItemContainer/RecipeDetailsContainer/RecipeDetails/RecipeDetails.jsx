@@ -66,7 +66,7 @@ class RecipeDetails extends Component {
 							<IconButton iconClassName="fa fa-cutlery" onClick={this.props.onAddAsCookedPopover} />
 						</div>
 						: <div className="header-buttons__already-cooked">
-							<IconButton iconClassName="fa fa-cutlery" />
+							<IconButton iconClassName="fa fa-cutlery" onClick={this.props.onAddAsCookedPopover}/>
 						</div>
 					}
 
@@ -108,13 +108,25 @@ class RecipeDetails extends Component {
 									id="add-as-cooked-textarea"
 									ref={(personalNotesInput) => this.personalNotesInput = personalNotesInput}
 									multiLine={true}
+									value={this.props.isRecipeCooked ? this.props.personalNotesForCookedRecipe : ''}
 									rows={4}
 									rowsMax={6}
 								/>
 							</div>
-							<div className="add-as-cooked__add-as-cooked-btn">
-								<RaisedButton label="Add as cooked" primary={true} onClick={this.props.onAddRecipeAsCooked}/>
-							</div>
+							{this.props.isRecipeCooked === false ? 
+								<div className="add-as-cooked__add-as-cooked-btn">
+									<RaisedButton label="Add as cooked" primary={true} onClick={this.props.onAddRecipeAsCooked} />
+								</div>
+								: <div className="add-as-cooked__already-cooked-btn-container">
+									<div className="add-as-cooked__add-as-cooked-btn">
+										<RaisedButton label="Update" primary={true} />
+									</div>
+									<div className="add-as-cooked__add-as-cooked-btn">
+										<RaisedButton label="Remove" secondary={true} />
+									</div>
+								</div>
+							}
+
 						</div>
 
 					</Popover>

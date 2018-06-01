@@ -14,6 +14,7 @@ class RecipeDetailsContainer extends Component {
 			recipeDetailsData: this.props.recipeDetailsData,
 			similarRecipes: [],
 			isRecipeCooked: false,
+			personalNotes: '',
 			isRecipeDetailsModalOpen: this.props.isRecipeDetailsModalOpen,
 			isEmailPopoverOpen: false,
 			emailPopoverAnchor: null,
@@ -32,6 +33,7 @@ class RecipeDetailsContainer extends Component {
 		this._onAddAsCookedPopover = this._onAddAsCookedPopover.bind(this);
 		this._onAddRecipeAsCooked = this._onAddRecipeAsCooked.bind(this);
 		this._isRecipeCooked = this._isRecipeCooked.bind(this);
+		this._getPersonalNotes = this._getPersonalNotes.bind(this);
 	}
 
 	render() {
@@ -51,6 +53,7 @@ class RecipeDetailsContainer extends Component {
 				onAddAsCookedPopover = {this._onAddAsCookedPopover}
 				addAsCookedPopoverAnchor = {this.state.addAsCookedPopoverAnchor}
 				onAddRecipeAsCooked = {this._onAddRecipeAsCooked}
+				personalNotesForCookedRecipe = {this.state.personalNotes}
 				isEmailPopoverOpen = {this.state.isEmailPopoverOpen}
 				onEmailPopover = {this._onEmailPopover}
 				emailPopoverAnchor = {this.state.emailPopoverAnchor}
@@ -63,7 +66,8 @@ class RecipeDetailsContainer extends Component {
 	componentWillMount() {
 		this._getSimilarRecipes();
 		this.setState({
-			isRecipeCooked: this._isRecipeCooked()
+			isRecipeCooked: this._isRecipeCooked(),
+			personalNotes: this._getPersonalNotes()
 		})
 	}
 
@@ -210,7 +214,6 @@ class RecipeDetailsContainer extends Component {
 	}
 
 	_onSendByEmail() {
-		console.log(this.recipeDetailsChild.emailAddressInput.getValue());
 
 		const sectionToPrint = document.getElementById('sectionToPrint');
 
@@ -251,12 +254,12 @@ class RecipeDetailsContainer extends Component {
 		}).then(function(response){
 			if(response.status === 200) {
 				response.json().then((user) => {
-					console.log(user);
 					successNotification('Recipe was added as cooked.');
 					cookies.set('user', user);
 					this.setState({
 						isAddAsCookedPopoverOpen: !this.state.isAddAsCookedPopoverOpen,
 						isRecipeCooked: true,
+						personalNotes: data.personalNotes
 					});
 				})
 			} else {
@@ -272,8 +275,6 @@ class RecipeDetailsContainer extends Component {
 		let cookedList = cookies.get('user').alreadyCookedRecipes;
 		let isCooked = false;
 
-		console.log(cookies.get('user'));
-
 		cookedList.forEach((cooked) => {
 			if(cooked.recipeId === this.state.recipeDetailsData._id) {
 				isCooked = true;
@@ -283,6 +284,19 @@ class RecipeDetailsContainer extends Component {
 		return isCooked;
 	}
 
+	_getPersonalNotes() {
+
+		let cookedList = cookies.get('user').alreadyCookedRecipes;
+		let personalNotes;
+
+		cookedList.forEach((cooked) => {
+			if(cooked.recipeId === this.state.recipeDetailsData._id) {
+				personalNotes = cooked.personalNotes;
+			}
+		});
+
+		return personalNotes;
+	}
 	
 }
 
