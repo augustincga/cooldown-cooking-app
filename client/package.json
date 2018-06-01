@@ -15,7 +15,8 @@
     "react-router-dom": "*",
     "react-scripts": "1.1.1",
     "react-slick": "^0.23.1",
-    "react-stars": "^2.2.5"
+	"react-stars": "^2.2.5",
+	"react-dropzone": "*"
   },
   "scripts": {
     "start": "react-scripts start",

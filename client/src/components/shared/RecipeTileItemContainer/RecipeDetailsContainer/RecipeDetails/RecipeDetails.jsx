@@ -61,6 +61,15 @@ class RecipeDetails extends Component {
 					<div className="header-buttons__send-by-email">
 						<IconButton iconClassName="fa fa-envelope" onClick={this.props.onEmailPopover}/>
 					</div>
+					{this.props.isRecipeCooked === false ?
+						<div className="header-buttons__add-as-cooked">
+							<IconButton iconClassName="fa fa-cutlery" onClick={this.props.onAddAsCookedPopover} />
+						</div>
+						: <div className="header-buttons__already-cooked">
+							<IconButton iconClassName="fa fa-cutlery" />
+						</div>
+					}
+
 
 					<Popover
 					    anchorEl={this.props.emailPopoverAnchor}
@@ -78,6 +87,33 @@ class RecipeDetails extends Component {
 							</div>
 							<div className="email-popover__send-email-btn">
 								<RaisedButton label="Send Recipe" primary={true} onClick={this.props.onSendByEmail}/>
+							</div>
+						</div>
+
+					</Popover>
+
+					<Popover
+						anchorEl={this.props.addAsCookedPopoverAnchor}
+						open={this.props.isAddAsCookedPopoverOpen}
+						anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+						targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+						onRequestClose={this.props.onAddAsCookedPopover}
+					>
+						<div className="add-as-cooked__wrapper">
+							<div className="add-as-cooked__title">
+								<h1>Personal notes: </h1>
+							</div>
+							<div className="add-as-cooked__notes-textarea">
+								<TextField
+									id="add-as-cooked-textarea"
+									ref={(personalNotesInput) => this.personalNotesInput = personalNotesInput}
+									multiLine={true}
+									rows={4}
+									rowsMax={6}
+								/>
+							</div>
+							<div className="add-as-cooked__add-as-cooked-btn">
+								<RaisedButton label="Add as cooked" primary={true} onClick={this.props.onAddRecipeAsCooked}/>
 							</div>
 						</div>
 

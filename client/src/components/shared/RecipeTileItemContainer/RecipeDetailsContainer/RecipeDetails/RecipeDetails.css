@@ -21,11 +21,38 @@
 	margin-top: 6px;
 }
 
-.header-buttons__export-pdf .fa-save, .header-buttons__send-by-email .fa-envelope {
+.header-buttons__export-pdf .fa-save, .header-buttons__send-by-email .fa-envelope, .header-buttons__add-as-cooked .fa-cutlery {
 	color: rgb(0, 188, 212) !important;
 }
 
-.email-popover__wrapper {
+.header-buttons__already-cooked .fa-cutlery {
+	color: #AE4848 !important;
+}
+
+.add-as-cooked__title {
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.add-as-cooked__title h1 {
+	font-size: 18px;
+}
+
+.add-as-cooked__notes-textarea > div {
+	width: 180px !important;
+}
+
+.add-as-cooked__notes-textarea  textarea {
+	color: #323232 !important;
+	font-family: 'Times New Roman', Times, serif !important;
+	font-size: 14px !important;
+}
+
+.add-as-cooked__add-as-cooked-btn {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.add-as-cooked__wrapper, .email-popover__wrapper {
 	display: flex;
     flex-direction: column;
 	align-items: center;
@@ -126,15 +153,6 @@
 .recipe-details__section-item .step-description {
 	margin-left: 5px;
 }
-
-/* .recipe-details__add-review-btn-wrapper {
-	width: 100%;
-	margin: 35px 0px 0px 0px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
-} */
 
 .recipe-details__add-review-wrapper h1 {
 	font-size: 14px;

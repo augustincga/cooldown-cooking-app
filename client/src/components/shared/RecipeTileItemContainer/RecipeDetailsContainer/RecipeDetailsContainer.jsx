@@ -13,9 +13,12 @@ class RecipeDetailsContainer extends Component {
 		this.state = {
 			recipeDetailsData: this.props.recipeDetailsData,
 			similarRecipes: [],
+			isRecipeCooked: false,
 			isRecipeDetailsModalOpen: this.props.isRecipeDetailsModalOpen,
 			isEmailPopoverOpen: false,
-			emailPopoverAnchor: null
+			emailPopoverAnchor: null,
+			addAsCookedPopoverAnchor: null,
+			isAddAsCookedPopoverOpen: false
 		}
 		this._getReviewDetails = this._getReviewDetails.bind(this);
 		this._onAddReview = this._onAddReview.bind(this);
@@ -26,6 +29,9 @@ class RecipeDetailsContainer extends Component {
 		this._onSimilarRecipeClick = this._onSimilarRecipeClick.bind(this);
 		this._onSendByEmail = this._onSendByEmail.bind(this);
 		this._onEmailPopover = this._onEmailPopover.bind(this);
+		this._onAddAsCookedPopover = this._onAddAsCookedPopover.bind(this);
+		this._onAddRecipeAsCooked = this._onAddRecipeAsCooked.bind(this);
+		this._isRecipeCooked = this._isRecipeCooked.bind(this);
 	}
 
 	render() {
@@ -40,6 +46,11 @@ class RecipeDetailsContainer extends Component {
 				onExportRecipeAsPdf = {this._onExportRecipeAsPdf}
 				onAddRating = {this._onAddRating}
 				addedUserRating = {this._getAddedRatingByUser()}
+				isAddAsCookedPopoverOpen = {this.state.isAddAsCookedPopoverOpen}
+				isRecipeCooked = {this.state.isRecipeCooked}
+				onAddAsCookedPopover = {this._onAddAsCookedPopover}
+				addAsCookedPopoverAnchor = {this.state.addAsCookedPopoverAnchor}
+				onAddRecipeAsCooked = {this._onAddRecipeAsCooked}
 				isEmailPopoverOpen = {this.state.isEmailPopoverOpen}
 				onEmailPopover = {this._onEmailPopover}
 				emailPopoverAnchor = {this.state.emailPopoverAnchor}
@@ -51,6 +62,9 @@ class RecipeDetailsContainer extends Component {
 
 	componentWillMount() {
 		this._getSimilarRecipes();
+		this.setState({
+			isRecipeCooked: this._isRecipeCooked()
+		})
 	}
 
 	_getReviewDetails() {
@@ -212,6 +226,64 @@ class RecipeDetailsContainer extends Component {
 			emailPopoverAnchor: event.currentTarget,
 		})
 	}
+
+	_onAddAsCookedPopover(event) {
+		this.setState({
+			isAddAsCookedPopoverOpen: !this.state.isAddAsCookedPopoverOpen,
+			addAsCookedPopoverAnchor: event.currentTarget,
+		})
+	}
+
+	_onAddRecipeAsCooked() {
+		let data = {
+			recipeId: this.state.recipeDetailsData._id,
+			userId: cookies.get('user')._id,
+			personalNotes: this.recipeDetailsChild.personalNotesInput.getValue()
+		}
+		
+		fetch('http://localhost:3001/api/user/addRecipeAsCooked', {
+			headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+			method: 'post',
+			body: JSON.stringify(data)
+		}).then(function(response){
+			if(response.status === 200) {
+				response.json().then((user) => {
+					console.log(user);
+					successNotification('Recipe was added as cooked.');
+					cookies.set('user', user);
+					this.setState({
+						isAddAsCookedPopoverOpen: !this.state.isAddAsCookedPopoverOpen,
+						isRecipeCooked: true,
+					});
+				})
+			} else {
+				response.json().then((error) => {
+					errorNotification(error.message);
+				})
+			}
+		}.bind(this))
+	}
+
+	
+	_isRecipeCooked() {
+		let cookedList = cookies.get('user').alreadyCookedRecipes;
+		let isCooked = false;
+
+		console.log(cookies.get('user'));
+
+		cookedList.forEach((cooked) => {
+			if(cooked.recipeId === this.state.recipeDetailsData._id) {
+				isCooked = true;
+			}
+		});
+
+		return isCooked;
+	}
+
+	
 }
 
 export default RecipeDetailsContainer;
