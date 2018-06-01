@@ -74,12 +74,7 @@ let UserSchema = mongoose.Schema({
     }],
     alreadyCookedRecipes: [{
         recipeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
-        personalSpecifications: {
-            ocasion: String,
-            date: Date,
-            additionalNotes: [String],
-            recipeChangesNotes: [String]
-        } 
+        personalNotes: String
     }],
     googleSearchedRecipes: [{
         date: {

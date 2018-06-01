@@ -43,6 +43,28 @@ exports.loginUser = function(req, res) {
     });
 };
 
+exports.addRecipeAsCooked = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let data = {
+		recipeId: req.body.recipeId,
+		personalNotes: req.body.personalNotes
+	}
+
+	let userId = req.body.userId;
+
+	User.findOneAndUpdate({ _id: userId }, { $push: { alreadyCookedRecipes: data } }, {new: true}, function(err, user){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to add the recipe to already cooked list."});
+        } else {
+			res.status(200).send(user);
+		}
+	});
+}
+
 exports.saveRecipeForLater = function(req, res) {
     if(!req.body) {
         return res.status(400).send({message: req.body});
