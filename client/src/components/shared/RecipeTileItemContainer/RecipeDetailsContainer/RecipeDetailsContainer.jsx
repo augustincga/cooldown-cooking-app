@@ -34,6 +34,9 @@ class RecipeDetailsContainer extends Component {
 		this._onAddRecipeAsCooked = this._onAddRecipeAsCooked.bind(this);
 		this._isRecipeCooked = this._isRecipeCooked.bind(this);
 		this._getPersonalNotes = this._getPersonalNotes.bind(this);
+		this._onRemoveCookedRecipe = this._onRemoveCookedRecipe.bind(this);
+		this._onUpdateCookedRecipe = this._onUpdateCookedRecipe.bind(this);
+		this._onPersonalNotesTextChange = this._onPersonalNotesTextChange.bind(this);
 	}
 
 	render() {
@@ -54,6 +57,9 @@ class RecipeDetailsContainer extends Component {
 				addAsCookedPopoverAnchor = {this.state.addAsCookedPopoverAnchor}
 				onAddRecipeAsCooked = {this._onAddRecipeAsCooked}
 				personalNotesForCookedRecipe = {this.state.personalNotes}
+				onPersonalNotesTextChange = {this._onPersonalNotesTextChange}
+				onUpdateCookedRecipe = {this._onUpdateCookedRecipe}
+				onRemoveCookedRecipe = {this._onRemoveCookedRecipe}
 				isEmailPopoverOpen = {this.state.isEmailPopoverOpen}
 				onEmailPopover = {this._onEmailPopover}
 				emailPopoverAnchor = {this.state.emailPopoverAnchor}
@@ -219,7 +225,7 @@ class RecipeDetailsContainer extends Component {
 
 		html2canvas(sectionToPrint)
 			.then((canvas) => {
-				console.log(canvas);
+
 			});
 	}
 
@@ -232,6 +238,7 @@ class RecipeDetailsContainer extends Component {
 
 	_onAddAsCookedPopover(event) {
 		this.setState({
+			personalNotes: this.state.isAddAsCookedPopoverOpen ? this._getPersonalNotes() : this.state.personalNotes,
 			isAddAsCookedPopoverOpen: !this.state.isAddAsCookedPopoverOpen,
 			addAsCookedPopoverAnchor: event.currentTarget,
 		})
@@ -296,6 +303,77 @@ class RecipeDetailsContainer extends Component {
 		});
 
 		return personalNotes;
+	}
+
+	_onRemoveCookedRecipe() {
+		let data = {
+			recipeId: this.state.recipeDetailsData._id,
+			userId: cookies.get('user')._id,
+		}
+		
+		fetch('http://localhost:3001/api/user/removeRecipeFromCooked', {
+			headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+			method: 'post',
+			body: JSON.stringify(data)
+		}).then(function(response){
+			if(response.status === 200) {
+				response.json().then((user) => {
+					successNotification('Recipe was removed from cooked list.');
+					cookies.set('user', user);
+					this.setState({
+						isAddAsCookedPopoverOpen: !this.state.isAddAsCookedPopoverOpen,
+						isRecipeCooked: false,
+						personalNotes: ''
+					});
+				})
+			} else {
+				response.json().then((error) => {
+					errorNotification(error.message);
+				})
+			}
+		}.bind(this))
+	}
+
+	_onUpdateCookedRecipe() {
+		let data = {
+			recipeId: this.state.recipeDetailsData._id,
+			userId: cookies.get('user')._id,
+			personalNotes: this.recipeDetailsChild.personalNotesInput.getValue()
+		}
+		
+		fetch('http://localhost:3001/api/user/updateCookedRecipe', {
+			headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+			method: 'post',
+			body: JSON.stringify(data)
+		}).then(function(response){
+			if(response.status === 200) {
+				response.json().then((user) => {
+					successNotification('Cooked recipe was updated.');
+					cookies.set('user', user);
+					this.setState({
+						isAddAsCookedPopoverOpen: !this.state.isAddAsCookedPopoverOpen,
+						isRecipeCooked: true,
+						personalNotes: data.personalNotes
+					});
+				})
+			} else {
+				response.json().then((error) => {
+					errorNotification(error.message);
+				})
+			}
+		}.bind(this))
+	}
+
+	_onPersonalNotesTextChange(event, value) {
+		this.setState({
+			personalNotes: value
+		});
 	}
 	
 }

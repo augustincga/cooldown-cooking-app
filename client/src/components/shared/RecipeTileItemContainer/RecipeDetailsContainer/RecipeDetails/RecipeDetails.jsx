@@ -105,10 +105,11 @@ class RecipeDetails extends Component {
 							</div>
 							<div className="add-as-cooked__notes-textarea">
 								<TextField
-									id="add-as-cooked-textarea"
+									id={`${this.props.recipeDetailsData.title}textarea`}
 									ref={(personalNotesInput) => this.personalNotesInput = personalNotesInput}
 									multiLine={true}
-									value={this.props.isRecipeCooked ? this.props.personalNotesForCookedRecipe : ''}
+									value={this.props.personalNotesForCookedRecipe}
+									onChange={this.props.onPersonalNotesTextChange}
 									rows={4}
 									rowsMax={6}
 								/>
@@ -119,10 +120,10 @@ class RecipeDetails extends Component {
 								</div>
 								: <div className="add-as-cooked__already-cooked-btn-container">
 									<div className="add-as-cooked__add-as-cooked-btn">
-										<RaisedButton label="Update" primary={true} />
+										<RaisedButton label="Update" primary={true} onClick={this.props.onUpdateCookedRecipe}/>
 									</div>
 									<div className="add-as-cooked__add-as-cooked-btn">
-										<RaisedButton label="Remove" secondary={true} />
+										<RaisedButton label="Remove" secondary={true} onClick={this.props.onRemoveCookedRecipe}/>
 									</div>
 								</div>
 							}
