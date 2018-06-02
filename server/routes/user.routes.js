@@ -15,4 +15,9 @@ module.exports = function(app){
 	app.post('/api/user/saveGoogleSearch', userController.saveGoogleSearch);
 
 	app.post('/api/user/addRecipeAsCooked', userController.addRecipeAsCooked);
+
+	app.post('/api/user/removeRecipeFromCooked', userController.removeRecipeFromCooked);
+
+	app.post('/api/user/updateCookedRecipe', userController.updateCookedRecipe);
+	
 };

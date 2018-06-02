@@ -65,6 +65,43 @@ exports.addRecipeAsCooked = function(req, res) {
 	});
 }
 
+exports.removeRecipeFromCooked = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let recipe = {recipeId: req.body.recipeId};
+	let userId = req.body.userId;
+
+	User.findOneAndUpdate({ _id: userId }, { $pull: { alreadyCookedRecipes: recipe} }, {new: true}, function(err, user){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to remove the recipe from cooked list."});
+        } else {
+			res.status(200).send(user);
+		}
+	});
+}
+
+exports.updateCookedRecipe = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let recipeId = req.body.recipeId
+	let userId = req.body.userId;
+	let personalNotes = req.body.personalNotes;
+
+	User.findOneAndUpdate({ _id: userId, "alreadyCookedRecipes.recipeId": recipeId}, { $set : { 'alreadyCookedRecipes.$.personalNotes' : personalNotes}}, {new: true}, function(err, user){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to update the recipe from cooked list."});
+        } else {
+			res.status(200).send(user);
+		}
+	});
+}
+
 exports.saveRecipeForLater = function(req, res) {
     if(!req.body) {
         return res.status(400).send({message: req.body});
