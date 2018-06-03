@@ -11,19 +11,24 @@ class RecipesCollectionContainer extends Component {
 			ratedRecipes: [],
 			ratedRecipesKey: 'rated-recipes-list',
 			reviewedRecipes: [],
-			reviewedRecipesKey: 'reviewd-recipes-list'
+			reviewedRecipesKey: 'reviewd-recipes-list',
+			cookedRecipes: [],
+			cookedRecipesKey: 'cooked-recipes-list'
 		}
 		this.user = cookies.get('user');
 		this._getRatedRecipesByUser = this._getRatedRecipesByUser.bind(this);
 		this._getReviewedRecipesByUser = this._getReviewedRecipesByUser.bind(this);
 		this._getSavedForLaterRecipes = this._getSavedForLaterRecipes.bind(this);
+		this._getCookedRecipesByUser = this._getCookedRecipesByUser.bind(this);
 		this._triggeredByBookmarkChange = this._triggeredByBookmarkChange.bind(this);
+		this._triggeredByRemoveFromAlreadyCooked = this._triggeredByRemoveFromAlreadyCooked.bind(this);
 	}
 
 	componentDidMount() {
 		this._getSavedForLaterRecipes();
 		this._getRatedRecipesByUser();
 		this._getReviewedRecipesByUser();
+		this._getCookedRecipesByUser();
 	}
 
 	render() {
@@ -34,7 +39,10 @@ class RecipesCollectionContainer extends Component {
 				ratedRecipesListKey = {this.state.ratedRecipesKey}
 				reviewedRecipesList = {this.state.reviewedRecipes}
 				reviewedRecipesListKey = {this.state.reviewedRecipesKey}
+				cookedRecipesList = {this.state.cookedRecipes}
+				cookedRecipesListKey = {this.state.cookedRecipesKey}
 				triggeredByBookmarkChange = {this._triggeredByBookmarkChange}
+				triggeredByRemoveFromAlreadyCooked = {this._triggeredByRemoveFromAlreadyCooked}
 			/>
 		);
 	}
@@ -111,6 +119,30 @@ class RecipesCollectionContainer extends Component {
         }.bind(this))
 	}
 
+	_getCookedRecipesByUser() {
+		let userId = this.user._id;
+
+		fetch(`http://localhost:3001/api/user/getCookedRecipes/${userId}`, {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: 'get',
+		}).then(function (response) {
+			if (response.status === 200) {
+				response.json().then((data) => {
+					this.setState({
+						cookedRecipes: data
+					})
+				})
+			} else {
+				response.json().then((data) => {
+					errorNotification(data.message);
+				});
+			}
+		}.bind(this))
+	}
+
 	_triggeredByBookmarkChange(action, recipe) {
 		let bookmarks = cookies.get('user').savedForLaterRecipes;
 
@@ -131,8 +163,19 @@ class RecipesCollectionContainer extends Component {
 
 		this.setState({
 			savedForLaterRecipes: synchronizedBookmarksList,
+			cookedRecipesKey: this.state.cookedRecipesKey + Math.random(),
 			ratedRecipesKey: this.state.ratedRecipesKey + Math.random(),
 			reviewedRecipesKey: this.state.reviewedRecipesKey + Math.random()
+		})
+	}
+
+	_triggeredByRemoveFromAlreadyCooked(recipeId) {
+
+		var synchronizedCookedList = this.state.cookedRecipes.filter(recipe => recipe._id !== recipeId);
+
+		this.setState({
+			cookedRecipes: synchronizedCookedList,
+			cookedRecipesKey: this.state.cookedRecipesKey + Math.random(),
 		})
 	}
 }

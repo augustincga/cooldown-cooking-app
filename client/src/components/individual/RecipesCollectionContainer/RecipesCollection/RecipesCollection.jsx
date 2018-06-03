@@ -27,6 +27,7 @@ class RecipesCollection extends Component {
 								recipesList = {this.props.savedForLaterRecipes} 
 								key = {"saved-for-later-recipes"}
 								triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}	
+								triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}			
 							/>
 						</div>
 						<div className="bookmarked-recipes-see-more-btn-wrapper">
@@ -45,6 +46,7 @@ class RecipesCollection extends Component {
 								recipesList = {this.props.reviewedRecipesList} 
 								key = {this.props.reviewedRecipesListKey}
 								triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
+								triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}			
 							/>
 						</div>
 						<div className="reviewed-recipes-see-more-btn-wrapper">
@@ -63,10 +65,30 @@ class RecipesCollection extends Component {
 							recipesList = {this.props.ratedRecipesList} 
 							key = {this.props.ratedRecipesListKey}
 							triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
+							triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}			
 							/>
 						</div>
 						<div className="rated-recipes-see-more-btn-wrapper">
 							<RaisedButton className="rated-recipes-see-more-btn" label="See more" primary={true}/>
+						</div>
+					</div>
+				</div>
+				<Divider/>	
+				<div className="recipes-collection__rated-recipes-wrapper">
+					<div>
+						<h1>
+							Already cooked recipes
+						</h1>
+						<div className="rated-recipes-container">
+							<RecipesCollectionList
+								recipesList={this.props.cookedRecipesList}
+								key={this.props.cookedRecipesListKey}			
+								triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
+								triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}			
+							/>
+						</div>
+						<div className="rated-recipes-see-more-btn-wrapper">
+							<RaisedButton className="rated-recipes-see-more-btn" label="See more" primary={true} />
 						</div>
 					</div>
 				</div>

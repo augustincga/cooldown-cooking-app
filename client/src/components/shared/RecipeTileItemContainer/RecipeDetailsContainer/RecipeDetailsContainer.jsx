@@ -328,6 +328,9 @@ class RecipeDetailsContainer extends Component {
 						isRecipeCooked: false,
 						personalNotes: ''
 					});
+					if(this.props.triggeredByRemoveFromAlreadyCooked) {
+						this.props.triggeredByRemoveFromAlreadyCooked(this.state.recipeDetailsData._id);
+					}
 				})
 			} else {
 				response.json().then((error) => {

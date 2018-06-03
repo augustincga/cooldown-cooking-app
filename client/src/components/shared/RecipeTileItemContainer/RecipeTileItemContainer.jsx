@@ -50,6 +50,7 @@ class RecipeTileItemContainer extends Component {
 						isRecipeDetailsModalOpen={this.state.isRecipeDetailsModalOpen}
 						recipeDetailsData={this.state.recipeDetailsData}
 						onRecipeDetailsModalClose={this._onRecipeDetailsModalClose}
+						triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}						
 					/> :
 					null}
 			</div>

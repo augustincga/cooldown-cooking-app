@@ -20,6 +20,7 @@ class RecipesCollectionList extends Component {
 							recipeData = {recipe} 
 							key = {recipe._id}
 							triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
+							triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}
 						/>					
 					)
 				})}
