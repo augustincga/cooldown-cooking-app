@@ -12,6 +12,8 @@ module.exports = function(app){
 	
 	app.get('/api/user/getSavedForLaterRecipes/:userId', userController.getSavedForLaterRecipes);
 
+	app.get('/api/user/getCookedRecipes/:userId', userController.getCookedRecipes);
+
 	app.post('/api/user/saveGoogleSearch', userController.saveGoogleSearch);
 
 	app.post('/api/user/addRecipeAsCooked', userController.addRecipeAsCooked);

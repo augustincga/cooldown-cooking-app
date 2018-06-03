@@ -166,6 +166,34 @@ exports.getSavedForLaterRecipes = function(req, res) {
 	});
 }
 
+exports.getCookedRecipes = function(req, res) {
+    if(!req.body) {
+        return res.status(400).send({message: req.body});
+	}
+
+	let userId = req.params.userId
+
+	User.find({ _id: userId }, 'alreadyCookedRecipes', function(err, list){
+        if(err) {
+            console.log(err);
+            res.status(500).send({message: "There was an error trying to get the cooked recipes list."});
+        } else {
+			let recipeIdsList = [];
+			list[0].alreadyCookedRecipes.forEach(function(recipe){
+				recipeIdsList.push(recipe.recipeId);
+			})
+			Recipe.find({ _id: { $in: recipeIdsList } }, function (err, recipes) {
+				if(err) {
+					console.log(err);
+					res.status(500).send({message: "There was an error trying to get the already cooked recipes list."});
+				} else {
+					res.status(200).send(recipes);
+				}
+			});
+		}
+	});
+}
+
 exports.saveGoogleSearch = function(req, res) {
     if(!req.body) {
         return res.status(400).send({message: req.body});
