@@ -27,7 +27,8 @@ class RecipesCollection extends Component {
 								recipesList = {this.props.savedForLaterRecipes} 
 								key = {"saved-for-later-recipes"}
 								triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}	
-								triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}			
+								triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}
+								triggeredByAddToCooked = {this.props.triggeredByAddToCooked}			
 							/>
 						</div>
 						<div className="bookmarked-recipes-see-more-btn-wrapper">
@@ -46,7 +47,8 @@ class RecipesCollection extends Component {
 								recipesList = {this.props.reviewedRecipesList} 
 								key = {this.props.reviewedRecipesListKey}
 								triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
-								triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}			
+								triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}
+								triggeredByAddToCooked = {this.props.triggeredByAddToCooked}						
 							/>
 						</div>
 						<div className="reviewed-recipes-see-more-btn-wrapper">
@@ -65,7 +67,8 @@ class RecipesCollection extends Component {
 							recipesList = {this.props.ratedRecipesList} 
 							key = {this.props.ratedRecipesListKey}
 							triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
-							triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}			
+							triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}
+							triggeredByAddToCooked = {this.props.triggeredByAddToCooked}						
 							/>
 						</div>
 						<div className="rated-recipes-see-more-btn-wrapper">

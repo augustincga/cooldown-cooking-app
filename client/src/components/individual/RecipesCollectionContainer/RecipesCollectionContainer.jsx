@@ -22,6 +22,7 @@ class RecipesCollectionContainer extends Component {
 		this._getCookedRecipesByUser = this._getCookedRecipesByUser.bind(this);
 		this._triggeredByBookmarkChange = this._triggeredByBookmarkChange.bind(this);
 		this._triggeredByRemoveFromAlreadyCooked = this._triggeredByRemoveFromAlreadyCooked.bind(this);
+		this._triggeredByAddToCooked = this._triggeredByAddToCooked.bind(this);
 	}
 
 	componentDidMount() {
@@ -43,6 +44,7 @@ class RecipesCollectionContainer extends Component {
 				cookedRecipesListKey = {this.state.cookedRecipesKey}
 				triggeredByBookmarkChange = {this._triggeredByBookmarkChange}
 				triggeredByRemoveFromAlreadyCooked = {this._triggeredByRemoveFromAlreadyCooked}
+				triggeredByAddToCooked = {this._triggeredByAddToCooked}
 			/>
 		);
 	}
@@ -171,10 +173,18 @@ class RecipesCollectionContainer extends Component {
 
 	_triggeredByRemoveFromAlreadyCooked(recipeId) {
 
-		var synchronizedCookedList = this.state.cookedRecipes.filter(recipe => recipe._id !== recipeId);
+		let synchronizedCookedList = this.state.cookedRecipes.filter(recipe => recipe._id !== recipeId);
 
 		this.setState({
 			cookedRecipes: synchronizedCookedList,
+			cookedRecipesKey: this.state.cookedRecipesKey + Math.random(),
+		})
+	}
+
+	_triggeredByAddToCooked(newlyAddCookedRecipe) {
+
+		this.setState({
+			cookedRecipes: [...this.state.cookedRecipes, newlyAddCookedRecipe],
 			cookedRecipesKey: this.state.cookedRecipesKey + Math.random(),
 		})
 	}

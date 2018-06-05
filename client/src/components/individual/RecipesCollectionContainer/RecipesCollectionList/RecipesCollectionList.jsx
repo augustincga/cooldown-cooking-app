@@ -21,6 +21,7 @@ class RecipesCollectionList extends Component {
 							key = {recipe._id}
 							triggeredByBookmarkChange = {this.props.triggeredByBookmarkChange}
 							triggeredByRemoveFromAlreadyCooked = {this.props.triggeredByRemoveFromAlreadyCooked}
+							triggeredByAddToCooked = {this.props.triggeredByAddToCooked}			
 						/>					
 					)
 				})}
