@@ -44,6 +44,7 @@ class RecipeTileItemContainer extends Component {
 					onRemoveFromBookmarks = {this._onRemoveFromBookmarks}
 					isRecipeBookmarked = {this.state.isRecipeBookmarked}
 					availability = {this.state.availability}
+					tileImageLoaded = {this.props.tileImageLoaded}
 				/>
 				{this.state.isRecipeDetailsModalOpen ?
 					<RecipeDetailsContainer

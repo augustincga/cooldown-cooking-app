@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import RecipeTilesList from './RecipesTilesList/RecipesTilesList';
 import RecipeSorting from '../RecipeSorting/RecipeSorting'
 
+
 const numberOfPassedRecipes = 9;
 
 class RecipesTilesListContainer extends Component {
@@ -11,12 +12,15 @@ class RecipesTilesListContainer extends Component {
 		this.state = {
 			recipesList: props.recipesList,
 			selectedIngredients: props.selectedIngredients,
+			tileImagesLoadedNumber: 0,
+			isLoadingActive: false,
 			passedRecipes: [],
 			lastPassedRecipeIndex: 0,
 			isDataLeftToRender: true,
 		}
 		this._onScrollEnd = this._onScrollEnd.bind(this);
 		this._triggerSortedRecipes = this._triggerSortedRecipes.bind(this);
+		this._tileImageLoaded = this._tileImageLoaded.bind(this);
 	}
 
 	render() {
@@ -33,6 +37,8 @@ class RecipesTilesListContainer extends Component {
 					selectedIngredients = {this.state.selectedIngredients}
 					onScrollEnd={this._onScrollEnd}
 					hasMore={this.state.isDataLeftToRender}
+					tileImageLoaded = {this._tileImageLoaded}
+					isLoadingActive = {this.state.isLoadingActive}
 				/>
 			</div>
 		);
@@ -53,7 +59,8 @@ class RecipesTilesListContainer extends Component {
 		this.setState({
 			lastPassedRecipeIndex: this.state.lastPassedRecipeIndex + numberOfPassedRecipes,
 			passedRecipes: this.state.passedRecipes.concat(passedRecipes),
-			isDataLeftToRender: isDataLeftInArray
+			isDataLeftToRender: isDataLeftInArray,
+			isLoadingActive: this.state.passedRecipes.length >= 9 || this.state.isLoadingActive ? true : false
 		})
 	}
 
@@ -62,7 +69,8 @@ class RecipesTilesListContainer extends Component {
 			recipesList: recipesList,
 			passedRecipes: [],
 			lastPassedRecipeIndex: 0,
-			isDataLeftToRender: true
+			isDataLeftToRender: true,
+			tileImagesLoadedNumber: 0
 		}, () => {
 			this._onScrollEnd();
 		});
@@ -75,11 +83,25 @@ class RecipesTilesListContainer extends Component {
 				selectedIngredients: newProps.selectedIngredients,
 				passedRecipes: [],
 				lastPassedRecipeIndex: 0,
-				isDataLeftToRender: true
+				isDataLeftToRender: true,
+				tileImagesLoadedNumber: 0,
+				isLoadingActive: true
 			}, () => {
 				this._onScrollEnd();
 			});
 		}
+	}
+
+	_tileImageLoaded() {
+		this.setState({
+			tileImagesLoadedNumber: this.state.tileImagesLoadedNumber + 1
+		}, () => {
+			if(this.state.tileImagesLoadedNumber === this.state.passedRecipes.length) {
+				this.setState({
+					isLoadingActive: false
+				})
+			}
+		})
 	}
 }
 

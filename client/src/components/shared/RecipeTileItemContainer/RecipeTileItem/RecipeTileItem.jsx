@@ -26,7 +26,7 @@ class RecipeTileItem extends Component {
 						className='recipe-tile__image-wrapper'
 					>
 						<div>
-							<img src={this.props.recipeData.largeImage} alt="" />
+							<img src={this.props.recipeData.largeImage} alt="" onLoad={this.props.tileImageLoaded}/>
 							{
 								this.props.isRecipeBookmarked === false ?
 									<IconButton className="recipe-tile__bookmark-btn-wrapper" onClick={this.props.onSaveForLaterClick}>
