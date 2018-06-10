@@ -32,7 +32,7 @@ class RecipesCollection extends Component {
 							/>
 						</div>
 						<div className="bookmarked-recipes-see-more-btn-wrapper">
-							<RaisedButton className="bookmarked-recipes-see-more-btn" label="See more" primary={true}/>
+							<RaisedButton className="bookmarked-recipes-see-more-btn" label="See more" primary={true} onClick={this.props.onSeeMoreClick.bind(this, 'bookmarked')}/>
 						</div>
 					</div>
 				</div>
@@ -52,7 +52,7 @@ class RecipesCollection extends Component {
 							/>
 						</div>
 						<div className="reviewed-recipes-see-more-btn-wrapper">
-							<RaisedButton className="reviewed-recipes-see-more-btn" label="See more" primary={true}/>
+							<RaisedButton className="reviewed-recipes-see-more-btn" label="See more" primary={true} onClick={this.props.onSeeMoreClick.bind(this, 'reviewed')}/>
 						</div>
 					</div>
 				</div>
@@ -72,7 +72,7 @@ class RecipesCollection extends Component {
 							/>
 						</div>
 						<div className="rated-recipes-see-more-btn-wrapper">
-							<RaisedButton className="rated-recipes-see-more-btn" label="See more" primary={true}/>
+							<RaisedButton className="rated-recipes-see-more-btn" label="See more" primary={true} onClick={this.props.onSeeMoreClick.bind(this, 'rated')}/>
 						</div>
 					</div>
 				</div>
@@ -91,7 +91,7 @@ class RecipesCollection extends Component {
 							/>
 						</div>
 						<div className="rated-recipes-see-more-btn-wrapper">
-							<RaisedButton className="rated-recipes-see-more-btn" label="See more" primary={true} />
+							<RaisedButton className="rated-recipes-see-more-btn" label="See more" primary={true} onClick={this.props.onSeeMoreClick.bind(this, 'cooked')}/>
 						</div>
 					</div>
 				</div>

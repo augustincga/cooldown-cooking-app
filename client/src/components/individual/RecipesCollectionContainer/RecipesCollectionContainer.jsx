@@ -23,6 +23,7 @@ class RecipesCollectionContainer extends Component {
 		this._triggeredByBookmarkChange = this._triggeredByBookmarkChange.bind(this);
 		this._triggeredByRemoveFromAlreadyCooked = this._triggeredByRemoveFromAlreadyCooked.bind(this);
 		this._triggeredByAddToCooked = this._triggeredByAddToCooked.bind(this);
+		this._onSeeMoreClick = this._onSeeMoreClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -45,6 +46,7 @@ class RecipesCollectionContainer extends Component {
 				triggeredByBookmarkChange = {this._triggeredByBookmarkChange}
 				triggeredByRemoveFromAlreadyCooked = {this._triggeredByRemoveFromAlreadyCooked}
 				triggeredByAddToCooked = {this._triggeredByAddToCooked}
+				onSeeMoreClick = {this._onSeeMoreClick}
 			/>
 		);
 	}
@@ -187,6 +189,23 @@ class RecipesCollectionContainer extends Component {
 			cookedRecipes: [...this.state.cookedRecipes, newlyAddCookedRecipe],
 			cookedRecipesKey: this.state.cookedRecipesKey + Math.random(),
 		})
+	}
+
+	_onSeeMoreClick(collectionName) {
+		switch(collectionName) {
+			case 'bookmarked':
+				this.props.onSeeMoreRecipesFromCollection(collectionName, this.state.savedForLaterRecipes)
+				break;
+			case 'reviewed':
+				this.props.onSeeMoreRecipesFromCollection(collectionName, this.state.reviewedRecipes)
+				break
+			case 'rated':
+				this.props.onSeeMoreRecipesFromCollection(collectionName, this.state.ratedRecipes)
+				break;
+			case 'cooked':
+				this.props.onSeeMoreRecipesFromCollection(collectionName, this.state.cookedRecipes)
+				break;
+		}
 	}
 }
 
