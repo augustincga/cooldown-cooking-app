@@ -140,7 +140,7 @@ class RecipeDetails extends Component {
 
 					<div className="recipe-details__header-wrapper">
 						<div className="recipe-picture">
-							<img src={this.props.recipeDetailsData.smallImage}/>
+							<img src={this.props.recipeDetailsData.smallImage} alt=""/>
 						</div>
 						<div className="recipe-data">
 							<div className="recipe-information-wrapper">

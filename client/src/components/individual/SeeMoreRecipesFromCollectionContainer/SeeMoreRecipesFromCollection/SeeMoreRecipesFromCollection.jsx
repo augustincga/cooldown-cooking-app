@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 
 import './SeeMoreRecipesFromCollections.css'
+import RecipesTilesListContainer from "../../../shared/RecipesTilesListContainer/RecipesTilesListContainer";
 
 class SeeMoreRecipesFromCollection extends Component {
     constructor(props) {
@@ -12,7 +13,15 @@ class SeeMoreRecipesFromCollection extends Component {
 
     render() {
 		return(
-			<SeeMoreRecipesFromCollection collectionData = {this.props.collectionData}/>
+			<div className="recipes-collection-expanded__container">
+				<div className="recipes-collection-expanded__title">
+					<h1>Recipes you already {this.props.collectionData.collectionName}</h1>
+				</div>
+				<RecipesTilesListContainer
+					recipesList={this.props.collectionData.recipesList}
+					selectedIngredients={[]}
+				/>
+			</div>
 		)
     }
 }

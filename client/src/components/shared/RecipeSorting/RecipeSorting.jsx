@@ -49,6 +49,8 @@ class RecipeSorting extends Component {
 				});
 				this.props.triggerSortedRecipes(this.props.recipesList);
 				break;
+			default:
+				break;
 		}
 	}
 

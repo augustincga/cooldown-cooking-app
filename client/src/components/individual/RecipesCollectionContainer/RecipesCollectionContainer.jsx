@@ -205,6 +205,8 @@ class RecipesCollectionContainer extends Component {
 			case 'cooked':
 				this.props.onSeeMoreRecipesFromCollection(collectionName, this.state.cookedRecipes)
 				break;
+			default: 
+				break;
 		}
 	}
 }

@@ -181,7 +181,7 @@ class RecipeTileItemContainer extends Component {
 
 		let recipeIngredients = [];
 
-		this.state.recipeData.ingredients.map((ingredient) => {
+		this.state.recipeData.ingredients.forEach((ingredient) => {
 			recipeIngredients.push(ingredient.name);
 		})
 
