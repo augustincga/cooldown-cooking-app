@@ -12,7 +12,7 @@ class HomeContainer extends Component {
 		super(props);
 		this.state = {
 			userData: cookies.get('user'),
-			isSearchRecipesMount: false,
+			isSearchRecipesMount: true,
 			isRecipesCollectionMount: false,
 			isGoogleSearchRecipeMount: false,
 			isSeeMoreRecipesFromCollectionMount: false
