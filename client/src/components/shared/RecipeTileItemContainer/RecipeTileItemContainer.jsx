@@ -15,7 +15,8 @@ class RecipeTileItemContainer extends Component {
 			availability: {
 				available: null,
 				missing: null
-			}
+			},
+			urlRecipeData: props.urlRecipeData
 		}
 		this._onRecipeTileItemClick = this._onRecipeTileItemClick.bind(this);
 		this._onRecipeDetailsModalClose = this._onRecipeDetailsModalClose.bind(this);
@@ -32,6 +33,13 @@ class RecipeTileItemContainer extends Component {
 		if(this.props.hasOwnProperty('selectedIngredients') && this.props.selectedIngredients.length > 0) {
 			this._getIngredientsAvailability();
 		}
+		if(this.props.urlRecipeData && this.props.urlRecipeData !== null) {
+			this._onRecipeTileItemClick();
+		}
+	}
+
+	componentDidMount() {
+		
 	}
 
 	render() {

@@ -17,6 +17,7 @@ class RecipesTilesListContainer extends Component {
 			passedRecipes: [],
 			lastPassedRecipeIndex: 0,
 			isDataLeftToRender: true,
+			urlRecipeData: null
 		}
 		this._onScrollEnd = this._onScrollEnd.bind(this);
 		this._triggerSortedRecipes = this._triggerSortedRecipes.bind(this);
@@ -39,6 +40,7 @@ class RecipesTilesListContainer extends Component {
 					hasMore={this.state.isDataLeftToRender}
 					tileImageLoaded = {this._tileImageLoaded}
 					isLoadingActive = {this.state.isLoadingActive}
+					urlRecipeData={this.state.urlRecipeData !== null ? this.state.urlRecipeData : null}
 				/>
 			</div>
 		);
@@ -89,6 +91,12 @@ class RecipesTilesListContainer extends Component {
 			}, () => {
 				this._onScrollEnd();
 			});
+		}
+
+		if(newProps.urlRecipeData) {
+			this.setState({
+				urlRecipeData: newProps.urlRecipeData
+			})
 		}
 	}
 

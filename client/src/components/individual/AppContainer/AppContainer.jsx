@@ -9,6 +9,7 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/flip.css';
 
+import MemoraRecipeById from '../MemoraRecipeById/MemoraRecipeById'
 import HomeContainer from '../HomeContainer/HomeContainer'
 import LoginContainer from '../LoginContainer/LoginContainer'
 import NotFoundRoute from '../../shared/NotFoundRoute/NotFoundRoute'
@@ -33,6 +34,7 @@ class AppContainer extends Component {
 					<Switch>
 						<Route exact path='/login' render={(params) => <LoginContainer onUserLogin={this._onUserLogin} history={params.history} />} />
 						<PrivateRoute exact path='/' component={HomeContainer} authed={this.state.authed} />
+						<Route exact path='/recipes/:recipeId' render={(params) => <MemoraRecipeById authed={this.state.authed} {...params}/>}/>
 						<Route component={NotFoundRoute} />
 					</Switch>
 				</Router>

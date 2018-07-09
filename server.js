@@ -19,6 +19,7 @@ require('./server/routes/user.routes')(app);
 require('./server/routes/food-category.routes')(app);
 require('./server/routes/recipe.routes')(app);
 require('./server/routes/ingredient.routes')(app);
+require('./MemoraAPI/routes/external-recipes.routes')(app);
 
 mongoose.Promise = global.Promise;
 

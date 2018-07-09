@@ -32,6 +32,7 @@ class RecipeTilesList extends Component {
 						key = {recipe._id} 
 						selectedIngredients={this.props.selectedIngredients}
 						tileImageLoaded = {this.props.tileImageLoaded}	
+						urlRecipeData={this.props.urlRecipeData !== null ? this.props.urlRecipeData : null}
 					/>
 				))}
 				</InfiniteScroll>

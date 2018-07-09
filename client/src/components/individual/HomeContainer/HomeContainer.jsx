@@ -15,7 +15,8 @@ class HomeContainer extends Component {
 			isSearchRecipesMount: true,
 			isRecipesCollectionMount: false,
 			isGoogleSearchRecipeMount: false,
-			isSeeMoreRecipesFromCollectionMount: false
+			isSeeMoreRecipesFromCollectionMount: false,
+			urlRecipeData: ''
 		}
 		this._onSearchRecipes = this._onSearchRecipes.bind(this);
 		this._onRecipesCollection = this._onRecipesCollection.bind(this);
@@ -31,12 +32,22 @@ class HomeContainer extends Component {
 					onRecipesCollection = {this._onRecipesCollection}
 					onGoogleSearchRecipe = {this._onGoogleSearchRecipe}
 				/>
-				{this.state.isSearchRecipesMount ? <SearchRecipesContainer /> : null}
+				{this.state.isSearchRecipesMount ? 
+					<SearchRecipesContainer 
+						urlRecipeData={this.state.urlRecipeData ? this.state.urlRecipeData : null}
+						/> 
+						: null}
 				{this.state.isRecipesCollectionMount ? <RecipesCollectionContainer onSeeMoreRecipesFromCollection = {this._onSeeMoreRecipesFromCollection}/> : null}
 				{this.state.isSeeMoreRecipesFromCollectionMount ? <SeeMoreRecipesFromCollectionContainer collectionData = {this.expandedCollectionData}/> : null}
 				{this.state.isGoogleSearchRecipeMount ? <GoogleSearchRecipeContainer/> : null}
 			</div>
 		);
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.setState({
+			urlRecipeData: newProps.urlRecipeData
+		})
 	}
 
 	_onSearchRecipes () {

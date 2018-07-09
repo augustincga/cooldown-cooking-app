@@ -12,15 +12,16 @@ class SearchRecipesContainer extends Component {
 		this.state = {
 			selectedIngredients: [],
 			recipesDataSet: [],
-			toggleSearchTypeValue: "filters"
+			toggleSearchTypeValue: "filters",
+			urlRecipeData: null
 		}
 		this._onFetchRecipesByFilters = this._onFetchRecipesByFilters.bind(this);
 		this._onTabChangeSearchType = this._onTabChangeSearchType.bind(this);
 		this._onSuccessfullyReceiveRecipesFromSearchBar = this._onSuccessfullyReceiveRecipesFromSearchBar.bind(this);
 	}
 
-	componentWillMount() {
-		
+	componentDidMount() {
+
 	}
 
 	render() {
@@ -48,14 +49,25 @@ class SearchRecipesContainer extends Component {
 				<RecipesTilesListContainer 
 					recipesList = {this.state.recipesDataSet}
 					selectedIngredients = {this.state.selectedIngredients}
+					urlRecipeData={this.state.urlRecipeData !== null ? this.state.urlRecipeData : null}
 				/>
 			</div>
 		);
 	}
 	
+	componentWillReceiveProps(newProps) {
+		if(newProps.urlRecipeData) {
+			this.setState({
+				urlRecipeData: newProps.urlRecipeData,
+				recipesDataSet: [...this.state.recipesDataSet, newProps.urlRecipeData]
+			})
+		}
+	}
+
 	_onFetchRecipesByFilters(recipes, filters) {
 		this.setState({
 			recipesDataSet: recipes,
+			urlRecipeData: null,
 			selectedIngredients: filters.ingredients
 		});
 	}
@@ -67,6 +79,7 @@ class SearchRecipesContainer extends Component {
 	_onSuccessfullyReceiveRecipesFromSearchBar(recipes) {
 		this.setState({
 			recipesDataSet: recipes,
+			urlRecipeData: null,
 			selectedIngredients: []
 		})
 	}
